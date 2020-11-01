@@ -1,0 +1,158 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: lightgray;
+}
+
+/* NAV BAR */
+nav {
+    background-color: black;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 40px;
+    height: 15vh;
+}
+
+.nav-links {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-links ul {
+    list-style-type: none;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.nav-links li {
+    list-style: none;
+    text-decoration: none;
+    padding-left: 10px;
+}
+
+.nav-links li>a {
+    color: white;
+    text-decoration: none;
+    letter-spacing: 3px;
+    font-weight: bold;
+    font-size: 1em;
+    padding: 10px;
+    border-radius: 10px;
+    transition: 0.2s ease-in;
+    border: 1px solid black;
+}
+
+.nav-links li .active {
+    color: grey;
+    border: none;
+    cursor: default;
+}
+
+.nav-links li:hover .active {
+    color: grey;
+    border: none;
+}
+
+.nav-links li>a:hover,
+.nav-links li>a:focus {
+    color: grey;
+    border: 1px solid white;
+}
+
+.nav-cart {
+    margin-left: 20px;
+    position: relative;
+    transition: 0.2s ease-in;
+}
+
+.nav-cart:hover,
+.nav-cart:focus {
+    transform: scale(0.9);
+}
+
+.nav-cart span {
+    color: white;
+    background-color: red;
+    position: absolute;
+    border-radius: 50%;
+    padding: 1px 6px;
+}
+
+.nav-image img {
+    width: 200px;
+}
+
+.nav-image {
+    transition: 0.2s ease-in;
+}
+
+.nav-image:hover,
+.nav-image:focus {
+    transform: scale(0.9);
+}
+
+.nav-cart img {
+    width: 50px;
+}
+
+/* CONTENT SECTION */
+.container {
+    height: 85vh;
+    width: 90%;
+    margin: 0 auto;
+    /* background-color: red; */
+}
+
+.container .cards {
+    margin: 20px 0px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.container .cards .card {
+    margin: 10px;
+    width: 380px;
+    border: 1px solid black;
+    border-radius: 5px;
+    overflow: hidden;
+
+}
+
+.card-image img {
+    width: 100%;
+}
+
+.card-details {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px;
+}
+
+.card-details>a {
+    border: 1px solid black;
+    background-color: #4CAF50;
+    border-radius: 5px;
+    color: black;
+    padding: 5px 5px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    transition: 0.2s ease-in-out;
+}
+
+.card-details>a:hover {
+    color: white;
+    border: 1px solid white;
+    background-color: grey;
+    transform: scale(0.95);
+}
