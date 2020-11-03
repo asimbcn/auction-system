@@ -156,3 +156,21 @@ nav {
     background-color: grey;
     transform: scale(0.95);
 }
+
+/* input form */
+
+.form {
+    height: 100%;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 5%;
+    margin: 25px;
+    height: 70vh;
+}

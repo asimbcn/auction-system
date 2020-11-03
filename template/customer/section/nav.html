@@ -1,0 +1,21 @@
+{% load static%}
+<nav>
+    <div class="nav-image">
+        <a href="{% url 'home'%}"><img src="{% static 'images/logo.png'%}" alt="Auction Logo"></a>
+    </div>
+    <div class="nav-links">
+        <div class="nav-link">
+            <ul>
+                <li><a href="{% url 'home' %}" {% if  index %}class="active" {%endif%}>Home</a></li>
+                <li><a href="{% url 'products' %}" {% if  products  %}class="active" {%endif%}>Products</a></li>
+                <li><a href="{% url 'coupons' %}" {% if  coupons %}class="active" {%endif%}>Coupons</a></li>
+                <li><a href="{% url 'contact' %}" {% if  contact %}class="active" {%endif%}>Contact Us</a></li>
+                <li><a href="{% url 'login' %}" {% if  login %}class="active" {%endif%}>Login/Register</a></li>
+            </ul>
+        </div>
+        <div class="nav-cart">
+            <a href="{% url 'cart' %}"><img src="{% static 'images/cart.png'%}" alt="Cart Image"></a>
+            <span class="cart-value">1</span>
+        </div>
+    </div>
+</nav>
