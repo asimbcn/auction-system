@@ -1,0 +1,24 @@
+Ext.define('MyApp.model.VCDRegCommon_mdl', {
+    extend: 'Ext.data.Model',
+
+    fields: [
+        {
+            name: 'DistrictCD'
+        },
+        {
+            name: 'VDCMUNCode'
+        },
+        {
+            name: 'NameNep'
+        },
+        {
+            name: 'NameEng'
+        },
+        {
+            name: 'VDCMUNType'
+        },
+        {
+            name: 'TotalWard'
+        }
+    ]
+});

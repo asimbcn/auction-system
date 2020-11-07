@@ -1,0 +1,25 @@
+Ext.define('MyApp.store.DocType', {
+    extend: 'Ext.data.Store',
+
+    requires: [
+        'MyApp.model.Document'
+    ],
+
+    constructor: function(cfg) {
+        var me = this;
+        cfg = cfg || {};
+        me.callParent([Ext.apply({
+            //autoLoad: true,
+            storeId: 'MyJsonStore1',
+            model: 'MyApp.model.Document',
+            proxy: {
+                type: 'ajax',
+                //url: '../Handlers/Common/DocumentTypeHandler.ashx?method=LoadDocumentType',
+                reader: {
+                    type: 'json',
+                    root: 'root'
+                }
+            }
+        }, cfg)]);
+    }
+});

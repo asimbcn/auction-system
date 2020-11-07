@@ -7,7 +7,7 @@ def customer_profile(sender, instance, created, **kwargs):
     if created:
         Customer.objects.create(
             user=instance,
-            name=instance.username,
+            name=instance.first_name,
             email=instance.email,
         )
 

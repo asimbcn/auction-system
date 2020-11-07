@@ -1,0 +1,48 @@
+Ext.define('MyApp.model.Document', {
+    extend: 'Ext.data.Model',
+
+    fields: [
+        {
+            name: 'SubmissionNo'
+        },
+        {
+            name: 'DocTypeNameEng'
+        },
+        {
+            name: 'DocTypeNameNep'
+        },
+        {
+            name: 'IdDocument'
+        },
+        {
+            name: 'IdNumber'
+        },
+        {
+            name: 'IdIssueAuthority'
+        },
+        {
+            name: 'IdIssueDate'
+        },
+        {
+            name: 'IdIssuePlace'
+        },
+        {
+            name: 'Document'
+        },
+        {
+            name: 'DocName'
+        },
+        {
+            name: 'DocNameUnique'
+        },
+        {
+            name: 'Action'
+        },
+        {
+            name: 'Active'
+        },
+        {
+            name: 'TranNo'
+        }
+    ]
+});

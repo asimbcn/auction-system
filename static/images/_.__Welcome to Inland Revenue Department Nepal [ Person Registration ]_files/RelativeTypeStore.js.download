@@ -1,0 +1,46 @@
+Ext.define('MyApp.store.RelativeTypeStore', {
+    extend: 'Ext.data.Store',
+
+    requires: [
+        'MyApp.model.RelativeType',
+        'Ext.data.proxy.Ajax',
+        'Ext.data.reader.Json'
+    ],
+
+    constructor: function(cfg) {
+        var me = this;
+        cfg = cfg || {};
+        me.callParent([Ext.apply({
+            model: 'MyApp.model.RelativeType',
+            storeId: 'RelativeTypeStore',
+            data: [
+                {
+                    RelativeTypeId: '1',
+                    RelativeTypeDesc: 'बाजे'
+                },
+                {
+                    RelativeTypeId: '2',
+                    RelativeTypeDesc: 'बुवा'
+                },
+                {
+                    RelativeTypeId: '3',
+                    RelativeTypeDesc: 'आमा'
+                },
+                {
+                    RelativeTypeId: '4',
+                    RelativeTypeDesc: 'पति/पत्नी'
+                },
+                {
+                    RelativeTypeId: '9',
+                    RelativeTypeDesc: 'संरक्षक'
+                }
+            ],
+            proxy: {
+                type: 'ajax',
+                reader: {
+                    type: 'json'
+                }
+            }
+        }, cfg)]);
+    }
+});

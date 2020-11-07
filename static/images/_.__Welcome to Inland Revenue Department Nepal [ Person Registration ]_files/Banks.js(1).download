@@ -1,0 +1,12 @@
+﻿Ext.define('MyApp.model.Banks', {
+    extend: 'Ext.data.Model',
+
+    fields: [
+        {
+            name: 'BankCode'
+        },
+        {
+            name: 'BankNameNepali'
+        }
+    ]
+});

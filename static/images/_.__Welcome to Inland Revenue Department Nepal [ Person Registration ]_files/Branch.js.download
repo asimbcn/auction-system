@@ -1,0 +1,23 @@
+Ext.define('MyApp.store.Branch', {
+    extend: 'Ext.data.Store',
+
+    requires: [
+        'MyApp.model.Branch'
+    ],
+
+    constructor: function(cfg) {
+        var me = this;
+        cfg = cfg || {};
+        me.callParent([Ext.apply({
+            storeId: 'Branch',
+            model: 'MyApp.model.Branch',
+            proxy: {
+                type: 'ajax',
+                reader: {
+                    type: 'json',
+                    root: 'root'
+                }
+            }
+        }, cfg)]);
+    }
+});

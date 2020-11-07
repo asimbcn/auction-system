@@ -1,0 +1,34 @@
+Ext.define('MyApp.store.ResidencyTypeStore', {
+    extend: 'Ext.data.Store',
+
+    requires: [
+        'MyApp.model.ResidencyType',
+        'Ext.data.proxy.Ajax',
+        'Ext.data.reader.Json'
+    ],
+
+    constructor: function(cfg) {
+        var me = this;
+        cfg = cfg || {};
+        me.callParent([Ext.apply({
+            model: 'MyApp.model.ResidencyType',
+            storeId: 'ResidencyTypeStore',
+            data: [
+                {
+                    ResidencyTypeID: 'R',
+                    ResidencyTypeDesc: 'Resident/बासिन्दा'
+                },
+                {
+                    ResidencyTypeID: 'N',
+                    ResidencyTypeDesc: 'Non-Resident/गैर बासिन्दा'
+                }
+            ],
+            proxy: {
+                type: 'ajax',
+                reader: {
+                    type: 'json'
+                }
+            }
+        }, cfg)]);
+    }
+});

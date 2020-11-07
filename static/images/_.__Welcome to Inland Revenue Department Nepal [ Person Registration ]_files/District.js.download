@@ -1,0 +1,33 @@
+Ext.define('MyApp.model.District', {
+    extend: 'Ext.data.Model',
+
+    uses: [
+        'MyApp.model.DistrictArea'
+    ],
+
+    fields: [
+        {
+            name: 'DistrictCode'
+        },
+        {
+            name: 'DistrictNameNp'
+        },
+        {
+            name: 'DistrictNameEn'
+        },
+        {
+            name: 'Zone'
+        },
+        {
+            name: 'DevRegion'
+        },
+        {
+            name: 'EcoRegion'
+        }
+    ],
+
+    hasMany: {
+        model: 'MyApp.model.DistrictArea',
+        name: 'DistrictAreas'
+    }
+});

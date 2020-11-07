@@ -1,0 +1,23 @@
+Ext.define('MyApp.store.PerRegTaxPayerProfSubCat', {
+    extend: 'Ext.data.Store',
+
+    requires: [
+        'MyApp.model.TaxPayerProfessionSubCat'
+    ],
+
+    constructor: function(cfg) {
+        var me = this;
+        cfg = cfg || {};
+        me.callParent([Ext.apply({
+            model: 'MyApp.model.TaxPayerProfessionSubCat',
+            storeId: 'MyJsonStore147',
+            proxy: {
+                type: 'ajax',
+                reader: {
+                    type: 'json',
+                    root: 'root'
+                }
+            }
+        }, cfg)]);
+    }
+});

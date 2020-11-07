@@ -1,0 +1,21 @@
+Ext.define('MyApp.model.TaxPayerProfessionSubCat', {
+    extend: 'Ext.data.Model',
+
+    fields: [
+        {
+            name: 'ProfSubCatID'
+        },
+        {
+            name: 'ProfCatID'
+        },
+        {
+            name: 'ProfSubCatName'
+        },
+        {
+            name: 'ProfSubCatNameNp'
+        },
+        {
+            name: 'Action'
+        }
+    ]
+});

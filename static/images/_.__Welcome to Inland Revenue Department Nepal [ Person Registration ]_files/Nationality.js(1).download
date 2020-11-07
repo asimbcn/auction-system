@@ -1,0 +1,12 @@
+Ext.define('MyApp.model.Nationality', {
+    extend: 'Ext.data.Model',
+
+    fields: [
+        {
+            name: 'NationalityText'
+        },
+        {
+            name: 'NationalityID'
+        }
+    ]
+});

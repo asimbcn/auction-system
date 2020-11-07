@@ -1,0 +1,24 @@
+Ext.define('MyApp.model.Branch', {
+    extend: 'Ext.data.Model',
+
+    fields: [
+        {
+            name: 'BankCode'
+        },
+        {
+            name: 'BrnAddress'
+        },
+        {
+            name: 'BrnCode'
+        },
+        {
+            name: 'BrnStatus'
+        },
+        {
+            name: 'FromDate'
+        },
+        {
+            name: 'ToDate'
+        }
+    ]
+});

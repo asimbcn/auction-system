@@ -1,0 +1,21 @@
+Ext.define('MyApp.store.VCD_PersonT_str', {
+    extend: 'Ext.data.Store',
+
+    requires: [
+        'MyApp.model.VCDRegCommon_mdl'
+    ],
+
+    constructor: function(cfg) {
+        var me = this;
+        cfg = cfg || {};
+        me.callParent([Ext.apply({
+            model: 'MyApp.model.VCDRegCommon_mdl',
+            proxy: {
+                type: 'ajax',
+                reader: {
+                    type: 'json'
+                }
+            }
+        }, cfg)]);
+    }
+});

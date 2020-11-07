@@ -1,19 +1,102 @@
 {% extends  'customer/section/main.html'%}
 {% load static %}
+{% block css %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.2/css/all.min.css">
+<style>
+    body {
+        background: rgb(63, 176, 43);
+        background: linear-gradient(90deg, rgba(63, 176, 43, 1) 0%, rgba(41, 187, 159, 1) 50%, rgba(19, 170, 185, 1) 100%);
+        font-family: 'Open Sans', sans-serif;
+    }
+
+    .container {
+        background-color: #fff;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        overflow: hidden;
+        width: 400px;
+        max-width: 100%;
+        margin-top: 20px !important;
+        margin-bottom: 30px !important;
+        height: 100%;
+    }
+
+    .login-link {
+        text-decoration: none;
+        transition: 0.3s ease-in-out;
+        border-bottom: 2px solid white;
+    }
+
+    .login-link:hover {
+        color: grey;
+        border-bottom: 2px solid lightslategrey;
+    }
+
+    .link-error {
+        color: red;
+        font-size: 12px;
+    }
+</style>
+{% endblock %}
 {% block title %}Register{% endblock %}
 {% block content %}
-<div class="form">
-    <form action="{% url 'register' %}" method="POST">
-        {% csrf_token %}
-        <label for="name">Name</label>
-        <input type="text" id="name" name="name" required>
-        <label for="email">Email</label>
-        <input type="email" id="email" name="email" required>
-        <label for="username">Username</label>
-        <input type="text" id="username" name="username" required>
-        <label for="password">Password</label>
-        <input type="password" id="password" name="passsword" required>
-        <input type="submit" name="submit">
-    </form>
+<div class="header">
+    <h2>Create Account</h2>
 </div>
+<form id="form" action="{% url 'register' %}" method="POST" class="form">
+    {% csrf_token %}
+    <div class="form-control">
+        <label for="name">Name</label>
+        <!-- <input type="text" placeholder="Your Name" id="name" /> -->
+        {{form.first_name}}
+        <i class="fas fa-check-circle"></i>
+        <i class="fas fa-exclamation-circle"></i>
+        <small>Error message</small>
+    </div>
+    <div class="form-control">
+        <label for="username">Username</label>
+        {{form.username}}
+        <i class="fas fa-check-circle"></i>
+        <i class="fas fa-exclamation-circle"></i>
+        <small>Error message</small>
+    </div>
+    <div class="form-control">
+        <label for="email">Email</label>
+        {{form.email}}
+        <i class="fas fa-check-circle"></i>
+        <i class="fas fa-exclamation-circle"></i>
+        <small>Error message</small>
+    </div>
+    <div class="form-control">
+        <label for="password">Password</label>
+        {{form.password1}}
+        <i class="fas fa-check-circle"></i>
+        <i class="fas fa-exclamation-circle"></i>
+        <small>Error message</small>
+    </div>
+    <div class="form-control">
+        <label for="password2">Confirm Password</label>
+        {{form.password2}}
+        <i class="fas fa-check-circle"></i>
+        <i class="fas fa-exclamation-circle"></i>
+        <small>Error message</small>
+    </div>
+    <div class="form-control">
+        <label>Alredy Have An Account? <a href="{% url 'login' %}" class="login-link">Login</a></label>
+        <p class="link-error">
+            {% for field in form %}
+            {%  for error in field.errors%}
+            {{error|escape}}<br>
+            {%endfor%}
+            {%endfor%}
+            {% for message in messages %}
+            {{message}}
+            {%endfor%}
+        </p>
+    </div>
+    <button type="submit" value="submit">Submit</button>
+</form>
+{% endblock %}
+{% block script %}
+<script src="{% static 'js/register.js' %}"></script>
 {% endblock %}
