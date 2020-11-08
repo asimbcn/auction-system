@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from .models import *
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from .forms import CreateUserForm
@@ -56,11 +57,25 @@ def cart(request):
     return render(request, 'customer/cart.html', context)
 
 
+def viewProduct(request, prodID='1'):
+    pid = prodID
+    print(pid)
+    context = {}
+    return render(request, 'customer/view.html', context)
+
+
+@login_required(login_url='login')
+def wishlist(request):
+    context = {'wishlist': 'true'}
+    return render(request, 'customer/wishlist.html', context)
+
+
 def coupons(request):
     context = {'coupons': 'true'}
     return render(request, 'customer/coupons.html', context)
 
 
+@login_required(login_url='login')
 def user_logout(request):
     logout(request)
     return redirect('home')
