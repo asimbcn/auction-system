@@ -1,0 +1,82 @@
+{% extends  'customer/section/main.html'%}
+{% load static %}
+{% block css %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.2/css/all.min.css">
+<style>
+    body {
+        background: rgb(63, 176, 43);
+        background: linear-gradient(90deg, rgba(63, 176, 43, 1) 0%, rgba(41, 187, 159, 1) 50%, rgba(19, 170, 185, 1) 100%);
+        font-family: 'Open Sans', sans-serif;
+    }
+
+    .container {
+        background-color: #fff;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        overflow: hidden;
+        width: 400px;
+        max-width: 100%;
+        margin-top: 20px !important;
+        margin-bottom: 30px !important;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .header {
+        background-color: white !important;
+        width: 90% !important;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.3) !important;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .select-route {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+        padding: 30px;
+    }
+
+    .select-route button {
+        margin: 0 20px;
+    }
+
+    .button {
+        padding: 15px;
+        margin: 5px;
+        outline: none;
+        color: white;
+        background-color: rgba(100, 100, 100, 0.9);
+        transition: 0.3s ease-in-out;
+    }
+
+    .button:hover,
+    .button:focus {
+        color: black;
+        background-color: white;
+        transform: scale(1.1);
+        border: 1px solid black;
+        font-weight: 700;
+    }
+</style>
+{% endblock %}
+{% block title %}Route Select{% endblock %}
+{% block content %}
+<div class="header">
+    <h2>Route Select</h2>
+</div>
+<div class="select-route">
+    <button class="button" onclick="window.location.href='{% url 'adminSelect' %}?redir=admin';">Admin Panel</button>
+    <button class="button" onclick="window.location.href='{% url 'adminSelect'%}?redir=home ';">Homepage</button>
+</div>
+{% endblock %}
+{% block script %}
+<script src="{% static 'js/login.js' %}"></script>
+{% endblock %}
