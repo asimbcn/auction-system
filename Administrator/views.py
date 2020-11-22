@@ -38,5 +38,7 @@ def adminUsers(request):
     if check_permission(request)['status'] == False:
         return redirect('home')
 
-    context = {'users': 'true'}
+    users = User.objects.all()
+
+    context = {'users': 'true', 'data': users}
     return render(request, 'adminpanel/users.html', context)

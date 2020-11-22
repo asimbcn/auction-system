@@ -1,6 +1,111 @@
 {% extends  'adminpanel/section/main.html'%}
 {% load static %}
 {% block title %}Users | Admin{% endblock %}
+{% block css%}
+<style>
+    body {
+        background: linear-gradient(45deg, #49a09d, #5f2c82);
+        font-family: sans-serif;
+        font-weight: 100;
+    }
+
+    .container {
+        margin: 20px;
+        border: none;
+    }
+
+    table {
+        margin: 20px 0px;
+        width: 800px;
+        border-collapse: collapse;
+        overflow: hidden;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    }
+
+    th,
+    td {
+        padding: 15px;
+        background-color: rgba(255, 255, 255, 0.2);
+        color: #fff;
+    }
+
+    th {
+        text-align: left;
+    }
+
+    thead th {
+        background-color: #55608f;
+    }
+
+    tbody tr:hover {
+        background-color: rgba(255, 255, 255, 0.3);
+    }
+
+    tbody td {
+        position: relative;
+    }
+
+    tbody td:hover:before {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: -9999px;
+        bottom: -9999px;
+        background-color: rgba(255, 255, 255, 0.2);
+        z-index: -1;
+    }
+
+    .btn-disabled,
+    .btn {
+        border: none;
+        background-color: transparent;
+        font-weight: 700;
+        font-size: 14px;
+        cursor: pointer;
+        padding: 5px;
+        margin: 2px;
+    }
+
+    .btn {
+        color: red;
+        transition: 0.1s ease-in-out;
+    }
+
+    .btn:focus,
+    .btn:hover {
+        outline: none;
+        transform: scale(1.2);
+
+    }
+</style>
+{% endblock%}
 {% block content %}
-Users
+<h1 style="color: white;">Users</h1>
+<table>
+    <thead>
+        <tr>
+            <th>Username</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Admin</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for user in data %}
+        <tr>
+            <td>{{user.username}}</td>
+            <td>{{user.customer.name}}</td>
+            <td>{{user.customer.email}}</td>
+            <td>{{user.customer.admin}}</td>
+            {% if user.customer.admin %}
+            <td><button disabled class="btn-disabled">Delete</button></td>
+            {% else %}
+            <td><button class="btn">Delete</button></td>
+            {% endif%}
+        </tr>
+        {%endfor%}
+    </tbody>
+</table>
 {% endblock %}
