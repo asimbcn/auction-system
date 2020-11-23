@@ -15,7 +15,7 @@
 
     table {
         margin: 20px 0px;
-        width: 800px;
+        width: 100%;
         border-collapse: collapse;
         overflow: hidden;
         box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
@@ -42,6 +42,7 @@
 
     tbody td {
         position: relative;
+        text-align: center;
     }
 
     tbody td:hover:before {
@@ -54,49 +55,86 @@
         background-color: rgba(255, 255, 255, 0.2);
         z-index: -1;
     }
+
+    .btn-disabled,
+    .btn {
+        border: none;
+        background-color: transparent;
+        font-weight: 700;
+        font-size: 14px;
+        cursor: pointer;
+        padding: 5px;
+        margin: 2px;
+    }
+
+    .btn {
+        color: red;
+        transition: 0.1s ease-in-out;
+    }
+
+    .btn:focus,
+    .btn:hover {
+        outline: none;
+        transform: scale(1.2);
+
+    }
+
+    .create-product {
+        text-decoration: none;
+        color: white;
+        transition: 0.2s ease-in-out;
+    }
+
+    .create-product:hover {
+        color: maroon;
+    }
 </style>
 {% endblock%}
 {% block title %}Products | Admin{% endblock %}
 {% block content %}
-<h1>Products</h1>
+<h1><a href="{% url 'createProduct' %}" class="create-product">Products</a></h1>
+<br>
+<h3>All</h3>
 <table>
     <thead>
         <tr>
-            <th>Column 1</th>
-            <th>Column 2</th>
-            <th>Column 3</th>
-            <th>Column 4</th>
-            <th>Column 5</th>
+            <th>Title</th>
+            <th>Bid</th>
+            <th>Image</th>
+            <th>Status</th>
+            <th>Created Date</th>
+            <th>Seller</th>
+            <th>Condition</th>
+            <th>Quantity</th>
+            <th>Action</th>
         </tr>
     </thead>
     <tbody>
         <tr>
-            <td>Cell 1</td>
-            <td>Cell 2</td>
-            <td>Cell 3</td>
-            <td>Cell 4</td>
-            <td>Cell 5</td>
-        </tr>
-        <tr>
-            <td>Cell 1</td>
-            <td>Cell 2</td>
-            <td>Cell 3</td>
-            <td>Cell 4</td>
-            <td>Cell 5</td>
-        </tr>
-        <tr>
-            <td>Cell 1</td>
-            <td>Cell 2</td>
-            <td>Cell 3</td>
-            <td>Cell 4</td>
-            <td>Cell 5</td>
-        </tr>
-        <tr>
-            <td>Cell 1</td>
-            <td>Cell 2</td>
-            <td>Cell 3</td>
-            <td>Cell 4</td>
-            <td>Cell 5</td>
+            {% if allProd%}
+            {% for prod in allProd %}
+            <td>{{prod.title}}</td>
+            <td>{{prod.start_bid}} <br>Max:{{prod.max_bid}}
+            </td>
+            {% if prod.image or prod.image == '' %}
+            <td>True</td>
+            {%else%}
+            <td>False</td>
+            {%endif%}
+            {% if prod.status == True %}
+            <td style="color:darkgreen; font-weight: 700;">{{prod.status}}</td>
+            {%else%}
+            <td style="color:red;font-weight: 700;">{{prod.status}}</td>
+            {%endif%}
+
+            <td>{{prod.date_created | timesince }}</td>
+            <td>{{prod.seller}}</td>
+            <td>{{prod.condition}}</td>
+            <td>{{prod.quantity}}</td>
+            <td><button class="btn" onclick="if (confirm('Are you sure you want to delete Product of id {{prod.id}}?')) {
+                   window.location.href='#' }">Delete</button></td>
+            {%endfor%}
+            {%endif%}
         </tr>
     </tbody>
 </table>

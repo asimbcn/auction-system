@@ -1,0 +1,19 @@
+{% extends  'adminpanel/section/main.html'%}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block css%}
+<style>
+    .container {
+        border: none;
+        padding: 20px;
+    }
+</style>
+{% endblock%}
+{% block title %}Create Product | Admin{% endblock %}
+{% block content %}
+<h1>Create Products</h1>
+<form action="{% url 'createProduct' %}" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{form|crispy}}
+</form>
+{% endblock %}

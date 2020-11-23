@@ -102,7 +102,9 @@
             {% if user.customer.admin %}
             <td><button disabled class="btn-disabled">Delete</button></td>
             {% else %}
-            <td><button class="btn">Delete</button></td>
+            <td><button class="btn" onclick="if (confirm('Are you sure you want to delete {{user.username}}?')) {
+                   window.location.href='{% url 'deleteUser' user.id %}' }">Delete</button>
+            </td>
             {% endif%}
         </tr>
         {%endfor%}

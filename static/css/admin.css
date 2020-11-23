@@ -5,20 +5,19 @@
 }
 
 body {
-    width: 100vw;
-    height: 100vh;
     background-color: lightgray;
     display: flex;
 }
 
 .container {
     border: 1px solid black;
-    width: 90vw;
     padding: 20px;
 }
 
 nav {
+    position: sticky;
     width: 10vw;
+    height: 100vh;
     background-color: darkgrey;
     display: flex;
     flex-direction: column;
