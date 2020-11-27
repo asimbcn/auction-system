@@ -31,12 +31,12 @@ def adminProducts(request):
 def createProduct(request):
     if check_permission(request)['status'] == False:
         return redirect('home')
-        
+
     error = ''
     form = CreateProduct()
 
     if request.method == 'POST':
-        form = CreateProduct(request.POST)
+        form = CreateProduct(request.POST, request.FILES)
         if form.is_valid():
             form.save()
             return redirect('adminProducts')

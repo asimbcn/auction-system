@@ -110,9 +110,9 @@
         </tr>
     </thead>
     <tbody>
+        {% if allProd%}
+        {% for prod in allProd %}
         <tr>
-            {% if allProd%}
-            {% for prod in allProd %}
             <td>{{prod.title}}</td>
             <td>{{prod.start_bid}} <br>Max:{{prod.max_bid}}
             </td>
@@ -133,9 +133,9 @@
             <td>{{prod.quantity}}</td>
             <td><button class="btn" onclick="if (confirm('Are you sure you want to delete Product of id {{prod.id}}?')) {
                    window.location.href='#' }">Delete</button></td>
-            {%endfor%}
-            {%endif%}
         </tr>
+        {%endfor%}
+        {%endif%}
     </tbody>
 </table>
 {% endblock %}

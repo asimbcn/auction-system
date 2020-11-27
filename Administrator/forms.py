@@ -6,4 +6,5 @@ from .models import *
 class CreateProduct(ModelForm):
     class Meta:
         model = Product
-        fields = '__all__'
+        # fields = '__all__'
+        exclude = ['status', 'date_created', 'valid_time']
