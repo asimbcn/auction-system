@@ -15,10 +15,10 @@
     }
 </style>
 {% endblock%}
-{% block title %}Create Product | Admin{% endblock %}
+{% block title %}Update Coupon | Admin{% endblock %}
 {% block content %}
-<h1>Create Products</h1>
-<form action="{% url 'createProduct' %}" method="POST" enctype="multipart/form-data">
+<h1>Update Coupon</h1>
+<form action="#" method="POST">
     {% csrf_token %}
     {{form|crispy}}
     <input class="btn btn-primary" type="submit" value="Submit">

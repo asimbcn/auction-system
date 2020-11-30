@@ -88,6 +88,16 @@
     .create-product:hover {
         color: maroon;
     }
+
+    .prod-title {
+        text-decoration: none;
+        color: white;
+        transition: 0.2s ease-in-out;
+    }
+
+    .prod-title:hover {
+        color: rgb(17, 17, 14);
+    }
 </style>
 {% endblock%}
 {% block title %}Products | Admin{% endblock %}
@@ -113,7 +123,7 @@
         {% if allProd%}
         {% for prod in allProd %}
         <tr>
-            <td>{{prod.title}}</td>
+            <td><a href="{% url 'editProduct' prod.id %}" class='prod-title'>{{prod.title}}</a></td>
             <td>{{prod.start_bid}} <br>Max:{{prod.max_bid}}
             </td>
             {% if prod.image or prod.image == '' %}
@@ -132,7 +142,7 @@
             <td>{{prod.condition}}</td>
             <td>{{prod.quantity}}</td>
             <td><button class="btn" onclick="if (confirm('Are you sure you want to delete Product of id {{prod.id}}?')) {
-                   window.location.href='#' }">Delete</button></td>
+                   window.location.href='{% url 'deleteProd' prod.id %}' }">Delete</button></td>
         </tr>
         {%endfor%}
         {%endif%}

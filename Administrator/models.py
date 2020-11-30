@@ -23,3 +23,23 @@ class Product(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class Coupon(models.Model):
+    couponchoices = models.TextChoices('couponchoices', 'Unlimited Onetime')
+
+    title = models.CharField(max_length=200, null=True)
+    active = models.BooleanField(default=True, null=True)
+    product = models.ForeignKey(Product,
+                                on_delete=models.SET_NULL,
+                                blank=True,
+                                null=True)
+    code = models.CharField(max_length=200, null=True)
+    discount = models.IntegerField(null=True)
+    use_type = models.CharField(null=True,
+                                default='Unlimited',
+                                choices=couponchoices.choices,
+                                max_length=10)
+
+    def __str__(self):
+        return self.title

@@ -2,8 +2,8 @@ from django.shortcuts import render, redirect
 from .models import *
 from Customer.models import *
 from django.contrib.auth.decorators import login_required
-from Customer.utils import check_permission, getProduct
-from .forms import CreateProduct
+from Customer.utils import check_permission, getProduct, getCoupon
+from .forms import CreateProduct, CreateCoupon
 
 
 # Create your views here.
@@ -49,12 +49,79 @@ def createProduct(request):
 
 
 @login_required(login_url='login')
+def editProduct(request, pk):
+    if check_permission(request)['status'] == False:
+        return redirect('home')
+
+    prod = Product.objects.get(id=pk)
+    error = ''
+    form = CreateProduct(instance=prod)
+
+    if request.method == 'POST':
+        form = CreateProduct(request.POST, request.FILES, instance=prod)
+        if form.is_valid():
+            form.save()
+            return redirect('adminProducts')
+        else:
+            error = 'Product Update Failed!'
+
+    context = {'products': 'true', 'form': form, 'error': error}
+
+    return render(request, 'adminpanel/update_product.html', context)
+
+
+@login_required(login_url='login')
 def adminCoupons(request):
     if check_permission(request)['status'] == False:
         return redirect('home')
 
-    context = {'coupons': 'true'}
+    data = getCoupon(request)
+    context = {'coupons': 'true', 'allCoup': data['allCoup']}
+
     return render(request, 'adminpanel/coupons.html', context)
+
+
+@login_required(login_url='login')
+def createCoupons(request):
+    if check_permission(request)['status'] == False:
+        return redirect('home')
+
+    error = ''
+    form = CreateCoupon()
+
+    if request.method == 'POST':
+        form = CreateCoupon(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('adminCoupons')
+        else:
+            error = 'Coupon Creation Failed!'
+
+    context = {'coupons': 'true', 'form': form, 'error': error}
+
+    return render(request, 'adminpanel/create_coupon.html', context)
+
+
+@login_required(login_url='login')
+def editCoupon(request, pk):
+    if check_permission(request)['status'] == False:
+        return redirect('home')
+
+    coup = Coupon.objects.get(id=pk)
+    error = ''
+    form = CreateCoupon(instance=coup)
+
+    if request.method == 'POST':
+        form = CreateCoupon(request.POST, instance=coup)
+        if form.is_valid():
+            form.save()
+            return redirect('adminCoupons')
+        else:
+            error = 'Coupon Creation Failed!'
+
+    context = {'coupons': 'true', 'form': form, 'error': error}
+
+    return render(request, 'adminpanel/update_coupon.html', context)
 
 
 @login_required(login_url='login')
@@ -86,3 +153,13 @@ def deleteProd(request, pk):
     prod = Product.objects.get(id=pk)
     prod.delete()
     return redirect('adminProducts')
+
+
+@login_required(login_url='login')
+def deleteCoup(request, pk):
+    if check_permission(request)['status'] == False:
+        return redirect('home')
+
+    Coup = Coupon.objects.get(id=pk)
+    Coup.delete()
+    return redirect('adminCoupons')

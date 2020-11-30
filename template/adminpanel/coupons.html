@@ -1,6 +1,141 @@
 {% extends  'adminpanel/section/main.html'%}
 {% load static %}
+{% block css%}
+<style>
+    body {
+        background: linear-gradient(45deg, #49a09d, #5f2c82);
+        font-family: sans-serif;
+        font-weight: 100;
+    }
+
+    .container {
+        margin: 20px;
+        border: none;
+    }
+
+    table {
+        margin: 20px 0px;
+        width: 100%;
+        border-collapse: collapse;
+        overflow: hidden;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    }
+
+    th,
+    td {
+        padding: 15px;
+        background-color: rgba(255, 255, 255, 0.2);
+        color: #fff;
+    }
+
+    th {
+        text-align: left;
+    }
+
+    thead th {
+        background-color: #55608f;
+    }
+
+    tbody tr:hover {
+        background-color: rgba(255, 255, 255, 0.3);
+    }
+
+    tbody td {
+        position: relative;
+        text-align: center;
+    }
+
+    tbody td:hover:before {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: -9999px;
+        bottom: -9999px;
+        background-color: rgba(255, 255, 255, 0.2);
+        z-index: -1;
+    }
+
+    .btn-disabled,
+    .btn {
+        border: none;
+        background-color: transparent;
+        font-weight: 700;
+        font-size: 14px;
+        cursor: pointer;
+        padding: 5px;
+        margin: 2px;
+    }
+
+    .btn {
+        color: red;
+        transition: 0.1s ease-in-out;
+    }
+
+    .btn:focus,
+    .btn:hover {
+        outline: none;
+        transform: scale(1.2);
+
+    }
+
+    .create-product {
+        text-decoration: none;
+        color: white;
+        transition: 0.2s ease-in-out;
+    }
+
+    .create-product:hover {
+        color: maroon;
+    }
+
+    .prod-title {
+        text-decoration: none;
+        color: white;
+        transition: 0.2s ease-in-out;
+    }
+
+    .prod-title:hover {
+        color: rgb(17, 17, 14);
+    }
+</style>
+{% endblock%}
 {% block title %}Coupons | Admin{% endblock %}
 {% block content %}
-Coupons
+<h1><a href="{% url 'createCoupon' %}" class="create-product">Coupons</a></h1>
+<br>
+<h3>All</h3>
+<table>
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Active</th>
+            <th>Product</th>
+            <th>Code</th>
+            <th>Discount %</th>
+            <th>Use Type</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% if allCoup %}
+        {% for coup in allCoup%}
+        <tr>
+            <td><a href="{% url 'editCoupon' coup.id %}" class='prod-title'>{{coup.title}}</a></td>
+            {% if coup.active == True %}
+            <td style="color:darkgreen; font-weight: 700;">{{coup.active}}</td>
+            {%else%}
+            <td style="color:red;font-weight: 700;">{{coup.active}}</td>
+            {%endif%}
+            <td>{{coup.product}}</td>
+            <td style="font-weight: 900;">{{coup.code}}</td>
+            <td>{{coup.discount}}</td>
+            <td>{{coup.use_type}}</td>
+            <td><button class="btn" onclick="if (confirm('Are you sure you want to delete Coupon of id {{coup.id}}?')) {
+                   window.location.href='{% url 'deleteCoup' coup.id %} ' }">Delete</button></td>
+        </tr>
+        {%endfor%}
+        {%endif%}
+    </tbody>
+</table>
 {% endblock %}
