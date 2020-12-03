@@ -7,7 +7,6 @@
         <div class="nav-link">
             <ul>
                 <li><a href="{% url 'home' %}" {% if  index %}class="active" {%endif%}>Home</a></li>
-                <li><a href="{% url 'coupons' %}" {% if  coupons %}class="active" {%endif%}>Coupons</a></li>
                 {% if user.is_authenticated%}
                 <li><a href="{% url 'wishlist' %}" {% if  wishlist %}class="active" {%endif%}>Wishlist</a></li>
                 <li><a href="{% url 'logout' %}">Logout</a></li>

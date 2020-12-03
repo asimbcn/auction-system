@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from datetime import datetime, timedelta
+from autoslug import AutoSlugField
 
 CURRENT_DATE = datetime.now()
 VALID = datetime.now() + timedelta(days=7)
@@ -9,6 +10,7 @@ VALID = datetime.now() + timedelta(days=7)
 # Create your models here.
 class Product(models.Model):
     title = models.CharField(max_length=200, null=True)
+    slug = AutoSlugField(populate_from='title', unique=True)
     start_bid = models.IntegerField(null=True)
     max_bid = models.IntegerField(null=True, blank=True)
     digital = models.BooleanField(default=False, null=True, blank=False)

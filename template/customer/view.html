@@ -1,8 +1,26 @@
 {% extends  'customer/section/main.html'%}
 {% load static %}
-{% block title %}View Products{% endblock %}
+{% block title %}{{product.title}} | Auction{% endblock %}
+{% block css%}
+<link rel="stylesheet" href="{% static 'css/product.css' %}">{% endblock%}
 {% block content %}
-<div>
-    <h1>View Products</h1>
+<div class="product-view">
+    <div class="product-img">
+        <img src="{{product.image.url}}" alt="Product Image" />
+    </div>
+    <div class="product-desc">
+        <h1>{{product.title}}</h1>
+        <span class="post-date">{{product.date_created|timesince}}</span>
+        {% if product.status == True %}
+        <div class="status">
+            Bid Open!
+        </div>
+        {%else%}
+        <div class="status">
+            Bid Closed!
+        </div>
+        {%endif%}
+    </div>
+
 </div>
 {% endblock %}

@@ -12,10 +12,14 @@ body {
 nav {
     background-color: black;
     display: flex;
+    position: sticky;
+    top: 0;
+    left: 0;
     justify-content: space-between;
     align-items: center;
     padding: 5px 40px;
     height: 15vh;
+    width: 100%;
 }
 
 .nav-links {
@@ -250,4 +254,11 @@ nav {
     padding: 10px;
     margin-top: 20px;
     width: 100%;
+}
+
+.bid-closed {
+    color: white !important;
+    border: 1px solid white !important;
+    background-color: grey !important;
+    transform: scale(0.95) !important;
 }
