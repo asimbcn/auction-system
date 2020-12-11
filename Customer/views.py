@@ -90,6 +90,12 @@ def viewProduct(request, slug):
     return render(request, 'customer/view.html', context)
 
 
+def completeProduct(request, slug):
+    product = Product.objects.get(slug=slug)
+    context = {'product': product}
+    return render(request, 'customer/all.html', context)
+
+
 @login_required(login_url='login')
 def wishlist(request):
     context = {'wishlist': 'true'}

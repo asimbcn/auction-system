@@ -10,16 +10,36 @@
     </div>
     <div class="product-desc">
         <h1>{{product.title}}</h1>
-        <span class="post-date">{{product.date_created|timesince}}</span>
-        {% if product.status == True %}
-        <div class="status">
-            Bid Open!
+        <div class="standard-info">
+            <span class="post-date">Posted {{product.date_created|timesince}} ago</span>
+            {% if product.status == True %}
+            <div class="status-open">
+                Bid Open!
+            </div>
+            {%else%}
+            <div class="status-closed">
+                Bid Closed!
+            </div>
+            {%endif%}
         </div>
-        {%else%}
-        <div class="status">
-            Bid Closed!
+        <div class="more-info">
+            <span>{{product.description}}</span>
         </div>
-        {%endif%}
+        <div class="bidding-section">
+            <div class="bid-price">
+                <span>Start Price : Rs. {{product.start_bid}}</span>
+            </div>
+            <form action="#" method="post" class="bidding-form">
+                {%csrf_token%}
+                <input type="number" class="bidding-input" required />
+                <button type="submit" value="submit" class="bidding-button">Bid</button>
+            </form>
+            <div class="all-info">
+                <a href="{% url 'completeProduct' product.slug%}">Product Detail</a>
+            </div>
+        </div>
+
+
     </div>
 
 </div>
