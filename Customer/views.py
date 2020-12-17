@@ -19,8 +19,6 @@ def index(request):
 def user_login(request):
     if request.user.is_authenticated:
         return redirect('home')
-    else:
-        pass
 
     if request.method == 'POST':
         user = authenticate(username=request.POST['username'],
@@ -45,8 +43,6 @@ def user_login(request):
 def register(request):
     if request.user.is_authenticated:
         return redirect('home')
-    else:
-        pass
 
     form = CreateUserForm()
 
@@ -100,6 +96,21 @@ def completeProduct(request, slug):
 def wishlist(request):
     context = {'wishlist': 'true'}
     return render(request, 'customer/wishlist.html', context)
+
+
+@login_required(login_url='login')
+def profile(request):
+    user = request.user
+    if user is not None:
+        try:
+            customer = Customer.objects.get(user=user)
+        except:
+            return redirect('login')
+    else:
+        return redirect('login')
+
+    context = {'profile': 'true', 'customer': customer}
+    return render(request, 'customer/profile.html', context)
 
 
 @login_required(login_url='login')

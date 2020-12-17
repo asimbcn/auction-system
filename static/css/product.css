@@ -100,7 +100,7 @@
 
 .bidding-button:hover {
     color: white;
-    background-color: lightskyblue;
+    background-color: grey;
     outline: none;
     border: none;
     transform: scale(0.90);
@@ -123,9 +123,9 @@
 }
 
 .all-info a:hover {
-    background-color: cyan;
-    color: red;
-    border: 1px solid cyan;
+    background-color: grey;
+    color: white;
+    border: 1px solid grey;
 }
 
 

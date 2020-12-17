@@ -2,7 +2,55 @@
 {% load static %}
 {% block title %}{{product.title}} | Auction{% endblock %}
 {% block css%}
-<link rel="stylesheet" href="{% static 'css/all.css' %}">{% endblock%}
+<link rel="stylesheet" href="{% static 'css/all.css' %}">
+{% endblock%}
 {% block content %}
-{{product.slug}}
+<div class="view">
+    <div class="view-all">
+
+        <div class="info">
+            <div class="title">Title</div>
+            <div class="prod">{{product.title}}</div>
+        </div>
+        <div class="info">
+            <div class="title">Start Price</div>
+            <div class="prod"> {{product.start_bid}}</div>
+        </div>
+        <div class="info">
+            <div class="title">Digital</div>
+            <div class="prod"> {{product.digital}}</div>
+        </div>
+        <div class="info">
+            <div class="title">Image</div>
+            <div class="prod">
+                {%if product.image%}
+                Yes
+                {%else%}
+                No
+                {%endif%}
+            </div>
+
+        </div>
+        <div class="info">
+            <div class="title">Description</div>
+            <div class="prod"> {{product.description}}</div>
+        </div>
+        <div class="info">
+            <div class="title">Posted</div>
+            <div class="prod"> {{product.date_created|timesince}}</div>
+        </div>
+        <div class="info">
+            <div class="title">Seller</div>
+            <div class="prod"> {{product.seller}}</div>
+        </div>
+        <div class="info">
+            <div class="title">Condition</div>
+            <div class="prod"> {{product.condition}}</div>
+        </div>
+        <div class="info">
+            <div class="title">Quantity</div>
+            <div class="prod"> {{product.quantity}} </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

@@ -1,0 +1,37 @@
+.view {
+    /* background-color: white; */
+    width: 80%;
+    margin: 0 auto;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.view-all {
+    background-color: white;
+    width: auto;
+    height: auto;
+    border: 1px solid black;
+    border-radius: 20px;
+    padding: 20px;
+    overflow: hidden;
+    margin-top: 10px;
+}
+
+.info {
+    display: flex;
+    justify-content: space-between;
+    gap: 500px;
+    border-bottom: 1px solid lightgrey;
+    padding: 10px 10px;
+}
+
+.info:last-child {
+    border-bottom: none;
+}
+
+.title {
+    font-weight: 700;
+    font-size: 18px;
+}
