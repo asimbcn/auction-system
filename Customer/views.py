@@ -6,7 +6,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from .forms import CreateUserForm
-from .utils import check_permission
+from .utils import check_permission, getProfile
+import datetime
 
 
 # Create your views here.
@@ -71,7 +72,7 @@ def adminSelect(request):
         else:
             return redirect('logout')
 
-    context = {}
+    context = {'route': 'true'}
     return render(request, 'redirect.html', context)
 
 
@@ -99,16 +100,9 @@ def wishlist(request):
 
 
 @login_required(login_url='login')
-def profile(request):
-    user = request.user
-    if user is not None:
-        try:
-            customer = Customer.objects.get(user=user)
-        except:
-            return redirect('login')
-    else:
-        return redirect('login')
-
+def profile(request, user):
+    customer = getProfile(request)
+    # transaction_id = int(datetime.datetime.now().timestamp())
     context = {'profile': 'true', 'customer': customer}
     return render(request, 'customer/profile.html', context)
 

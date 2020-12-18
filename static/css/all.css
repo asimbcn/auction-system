@@ -1,3 +1,7 @@
+body {
+    background-color: darkgrey;
+}
+
 .view {
     /* background-color: white; */
     width: 80%;
@@ -9,7 +13,7 @@
 }
 
 .view-all {
-    background-color: white;
+    background-color: lightgrey;
     width: auto;
     height: auto;
     border: 1px solid black;
@@ -23,7 +27,7 @@
     display: flex;
     justify-content: space-between;
     gap: 500px;
-    border-bottom: 1px solid lightgrey;
+    border-bottom: 1px solid grey;
     padding: 10px 10px;
 }
 
@@ -32,6 +36,7 @@
 }
 
 .title {
+    color: brown;
     font-weight: 700;
     font-size: 18px;
 }

@@ -1,9 +1,27 @@
 {% extends  'customer/section/main.html'%}
 {% load static %}
 {% block title %}{{request.user.username}} | Profile{% endblock %}
+{%block css%}
+<link rel="stylesheet" href="{% static 'css/profile.css' %}">
+{%endblock%}
 {% block content %}
-<div>
-    <h1>Profile</h1>
-    <span>{{customer.name}}</span>
+<div class="details">
+    <div class="top-bar">
+        <div class="profile-picture">
+            <form action="#" method="post" enctype="multipart/form-data">
+                {%csrf_token%}
+                <label for="profile-update"><img class="image" src="{{customer.imageURL}}"
+                        alt="{{customer.user.username}}'s profile picture" srcset="{{customer.imageURL}}"></label>
+                <input type="file" id="profile-update" name="image" accept="image/*" onchange="form.submit()" hidden />
+            </form>
+        </div>
+        <div class="top-info">
+            <h2>{{customer.name}}</h2>
+        </div>
+    </div>
+    <div class="middle-bar">
+        <span>{{customer.email}}</span>
+        <span>{{customer.admin}}</span>
+    </div>
 </div>
 {% endblock %}

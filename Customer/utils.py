@@ -57,3 +57,15 @@ def getCoupon(request):
         'activeCoup': activeCoup,
         'inactiveCoup': inactiveCoup
     }
+
+
+def getProfile(request):
+    user = request.user
+    if user is not None:
+        try:
+            customer = Customer.objects.get(user=user)
+            return customer
+        except:
+            return ''
+    else:
+        return ''

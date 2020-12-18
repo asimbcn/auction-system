@@ -12,5 +12,5 @@ urlpatterns = [
     path('view/<slug:slug>', views.viewProduct, name="view"),
     path('product/<slug:slug>', views.completeProduct, name="completeProduct"),
     path('wishlist/', views.wishlist, name="wishlist"),
-    path('profile/', views.profile, name="profile"),
+    path('profile/<str:user>', views.profile, name="profile"),
 ]
