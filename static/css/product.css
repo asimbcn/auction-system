@@ -43,6 +43,18 @@
     align-items: center;
 }
 
+.time-remaining {
+    display: inline-block;
+    color: red;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+#countdown {
+    display: inline-block;
+}
+
+
 .post-date {
     font-weight: 100;
     font-size: 13px;

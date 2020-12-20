@@ -4,6 +4,8 @@ from Customer.models import *
 from django.contrib.auth.decorators import login_required
 from Customer.utils import check_permission, getProduct, getCoupon
 from .forms import CreateProduct, CreateCoupon
+from django.http import JsonResponse
+import json
 
 
 # Create your views here.
@@ -68,6 +70,19 @@ def editProduct(request, pk):
     context = {'products': 'true', 'form': form, 'error': error}
 
     return render(request, 'adminpanel/update_product.html', context)
+
+
+def closeBid(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        slugData = data['slug']
+        product = Product.objects.get(slug=slugData)
+        product.status = False
+        try:
+            product.save()
+            return JsonResponse('Product Expired', safe=False)
+        except:
+            pass
 
 
 @login_required(login_url='login')

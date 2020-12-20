@@ -1,5 +1,6 @@
-from .models import Customer
+from .models import Customer, ShippingAddress
 from Administrator.models import Product, Coupon
+from datetime import datetime
 
 
 def check_permission(request):
@@ -59,13 +60,44 @@ def getCoupon(request):
     }
 
 
-def getProfile(request):
-    user = request.user
-    if user is not None:
+def getProfile(request, pk='None'):
+    if pk != 'None':
+        customer = Customer.objects.get(id=pk)
+        return customer
+    else:
+        user = request.user
+        if user is not None:
+            try:
+                customer = Customer.objects.get(user=user)
+                return customer
+            except:
+                return ''
+        else:
+            return ''
+
+
+def getShipping(request):
+    customer = getProfile(request)
+    if customer != '':
         try:
-            customer = Customer.objects.get(user=user)
-            return customer
+            shipping = ShippingAddress.objects.get(customer=customer)
+            return shipping
         except:
             return ''
     else:
         return ''
+
+
+# def prodUpdate():
+#     product = Product.objects.filter(status=True)
+#     for p in product:
+#         print(p)
+#         print(datetime.date())
+#         print(p.valid_time)
+#         # if datetime.now() > p.valid_time:
+#         #     print('change')
+#         #     p.status = False
+#         #     try:
+#         #         prod.save()
+#         #     except:
+#         #         continue

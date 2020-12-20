@@ -20,6 +20,7 @@ nav {
     padding: 5px 40px;
     height: 15vh;
     width: 100%;
+    z-index: 5;
 }
 
 .nav-links {

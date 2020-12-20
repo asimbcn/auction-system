@@ -1,0 +1,57 @@
+{% extends  'customer/section/main.html'%}
+{% load static %}
+{% block title %}Edit | {{user.username}}{% endblock %}
+{%block css%}
+<link rel="stylesheet" href="{% static 'css/edit.css' %}">
+{%endblock%}
+{% block content %}
+<div class="editProfile">
+    <h1>Edit Profile</h1>
+    <div class="user-info">
+        <form action="{% url 'editUser' user.customer.id %}" method="POST">
+            {%csrf_token%}
+            <div class="form">
+                <label for="username">Username</label>
+                <input type="text" name="username" id="username" placeholder="{{user.username}}">
+                <label for="name">Name</label>
+                <input type="text" name="name" id="name" placeholder="{{user.first_name}}">
+                <label for="email">Email</label>
+                <input type="email" name="email" id="email" placeholder="{{user.email}}">
+            </div>
+            <label for="password" class="password-label pass">Enter Password to Continue:</label>
+            <input type="password" name="password" id="password" placeholder="*******" class="hide-pass hide">
+            <div class="btns">
+                <input type="submit" value="Submit" id="hide-btn" class="submit-button">
+                <input type="button" value="Verify" class="verify-button" onclick="verify()">
+                <input type="button" value="Back" id="hide-back" class="back-button" onclick="revert()">
+                <input type="reset" value="Reset" class="reset-button">
+            </div>
+
+        </form>
+    </div>
+</div>
+{% endblock %}
+{%block script%}
+<script>
+    function verify() {
+        document.getElementsByClassName('form')[0].classList.add('hide');
+        document.getElementsByClassName('password-label')[0].classList.remove('password-label');
+        document.getElementsByClassName('hide-pass')[0].classList.remove('hide');
+        document.getElementsByClassName('submit-button')[0].removeAttribute("id");
+        document.getElementsByClassName('back-button')[0].removeAttribute("id");
+        document.getElementsByClassName('verify-button')[0].setAttribute("id", "hide-btn");
+        document.getElementsByClassName('reset-button')[0].setAttribute("id", "hide-reset");
+    }
+
+    function revert() {
+        document.getElementsByClassName('form')[0].classList.remove('hide');
+        document.getElementsByClassName('pass')[0].classList.add('password-label');
+        document.getElementsByClassName('hide-pass')[0].classList.add('hide');
+        document.getElementsByClassName('submit-button')[0].setAttribute("id", "hide-btn");
+        document.getElementsByClassName('back-button')[0].setAttribute("id", "hide-back");
+        document.getElementsByClassName('reset-button')[0].removeAttribute("id");
+        document.getElementsByClassName('verify-button')[0].removeAttribute("id");
+    }
+</script>
+
+{% endblock %}

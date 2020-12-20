@@ -1,0 +1,86 @@
+.editProfile {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 20px;
+    gap: 10px;
+}
+
+h1 {
+    font-size: 3em;
+    font-weight: 500;
+}
+
+.user-info {
+    width: 100%;
+    height: auto;
+}
+
+.form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 20px;
+}
+
+label {
+    font-size: 25px;
+    font-weight: 400;
+    width: 100%;
+    margin: 10px 0px;
+}
+
+input[type='text'],
+input[type='email'],
+input[type='password'] {
+    width: 100%;
+    padding: 8px 15px;
+    border-radius: 5px;
+    outline: none;
+    border: 2px solid grey;
+    font-size: 22px;
+    font-weight: 400;
+}
+
+input[type='text']:hover,
+input[type='text']:focus,
+input[type='email']:hover,
+input[type='email']:focus,
+input[type='password']:hover,
+input[type='password']:focus {
+    outline: rgb(22, 143, 184);
+    border: 2px solid rgb(22, 143, 184);
+}
+
+input[type='submit'],
+input[type='reset'],
+input[type='button'] {
+    display: inline-block;
+    padding: 8px 15px;
+    border-radius: 5px;
+    outline: none;
+    border: 2px solid grey;
+    font-size: 22px;
+    font-weight: 400;
+}
+
+.btns {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+#hide-btn,
+#hide-back,
+#hide-reset,
+.password-label {
+    display: none;
+}
+
+.hide {
+    display: none;
+}

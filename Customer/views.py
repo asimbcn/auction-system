@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from .forms import CreateUserForm
-from .utils import check_permission, getProfile
+from .utils import check_permission, getProfile, getShipping
 import datetime
 
 
@@ -76,6 +76,22 @@ def adminSelect(request):
     return render(request, 'redirect.html', context)
 
 
+@login_required(login_url='login')
+def editUser(request, pk):
+    customer = Customer.objects.get(id=pk)
+    user = customer.user
+
+    if request.method == 'POST':
+        print(request.POST['username'])
+        print(request.POST['name'])
+        print(request.POST['email'])
+        print(request.POST['password'])
+        return redirect('profile')
+
+    context = {'profile': 'true', 'user': user}
+    return render(request, 'customer/editUser.html', context)
+
+
 def cart(request):
     context = {}
     return render(request, 'customer/cart.html', context)
@@ -83,12 +99,16 @@ def cart(request):
 
 def viewProduct(request, slug):
     product = Product.objects.get(slug=slug)
+    if product.status == False:
+        return redirect('home')
     context = {'product': product}
     return render(request, 'customer/view.html', context)
 
 
 def completeProduct(request, slug):
     product = Product.objects.get(slug=slug)
+    if product.status == False:
+        return redirect('home')
     context = {'product': product}
     return render(request, 'customer/all.html', context)
 
@@ -100,10 +120,24 @@ def wishlist(request):
 
 
 @login_required(login_url='login')
-def profile(request, user):
+def editPhoto(request, pk):
+    profile = getProfile(request, pk)
+    if request.method == 'POST':
+        profile.image = request.FILES['image']
+        try:
+            profile.save()
+        except:
+            pass
+
+    return redirect(Userprofile, user=request.user)
+
+
+@login_required(login_url='login')
+def Userprofile(request, user):
     customer = getProfile(request)
+    shipping = getShipping(request)
     # transaction_id = int(datetime.datetime.now().timestamp())
-    context = {'profile': 'true', 'customer': customer}
+    context = {'profile': 'true', 'customer': customer, 'shipping': shipping}
     return render(request, 'customer/profile.html', context)
 
 

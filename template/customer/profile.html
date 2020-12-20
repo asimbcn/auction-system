@@ -8,7 +8,7 @@
 <div class="details">
     <div class="top-bar">
         <div class="profile-picture">
-            <form action="#" method="post" enctype="multipart/form-data">
+            <form action="{%url 'editPhoto' customer.id %}" method="post" enctype="multipart/form-data">
                 {%csrf_token%}
                 <label for="profile-update"><img class="image" src="{{customer.imageURL}}"
                         alt="{{customer.user.username}}'s profile picture" srcset="{{customer.imageURL}}"></label>
@@ -17,11 +17,38 @@
         </div>
         <div class="top-info">
             <h2>{{customer.name}}</h2>
+            <div class="edit-info">
+                <a href="{% url 'editUser' customer.id %}" class="edit-profile">Edit Profile</a>
+                {%if shipping.edit == True%}
+                <a href="#" class="edit-profile">Edit Shipping Info</a>
+                {%endif%}
+            </div>
         </div>
     </div>
     <div class="middle-bar">
-        <span>{{customer.email}}</span>
-        <span>{{customer.admin}}</span>
+        <span>Email : {{customer.email}}</span>
+        <span>Account Status : {%if customer.active == True%}Active{% else %}Inactive{%endif%}</span>
+    </div>
+    <div class="shipping-info">
+        <span>Shipping info</span>
+        <div class="shipping-info-details">
+            <div class="indiv-detail">
+                <h4>Address</h4>
+                <span>{{shipping.address}}</span>
+            </div>
+            <div class="indiv-detail">
+                <h4>City</h4>
+                <span>{{shipping.city}}</span>
+            </div>
+            <div class="indiv-detail">
+                <h4>State</h4>
+                <span>{{shipping.state}}</span>
+            </div>
+            <div class="indiv-detail">
+                <h4>Zipcode</h4>
+                <span>{{shipping.zipcode}}</span>
+            </div>
+        </div>
     </div>
 </div>
 {% endblock %}

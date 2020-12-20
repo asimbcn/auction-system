@@ -12,6 +12,9 @@
         <h1>{{product.title}}</h1>
         <div class="standard-info">
             <span class="post-date">Posted {{product.date_created|timesince}} ago</span>
+            <div class="time-remaining">
+                <p id="countdown"></p> Left
+            </div>
             {% if product.status == True %}
             <div class="status-open">
                 Bid Open!
@@ -44,3 +47,62 @@
 
 </div>
 {% endblock %}
+
+
+{% block script %}
+<script>
+    function getToken(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    const
+        csrftoken = getToken('csrftoken');
+</script>
+<script>
+    var startdate = new Date('{{product.valid_time|date:"F d Y"}}').getTime();
+
+    var x = setInterval(function () {
+        var enddate = new Date().getTime();
+        var distance = startdate - enddate;
+
+        var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        if (distance < 0) {
+            var url = '/adminpanel/product/closebid/'
+            fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': csrftoken,
+                    },
+                    body: JSON.stringify({
+                        'slug': '{{product.slug}}',
+                    })
+                })
+                .then((response) => {
+                    return response.json()
+                })
+                .then((data) => {
+                    location.reload()
+                });
+        }
+
+        document.getElementById("countdown").innerHTML = days + "d " + hours + "h " + minutes + "m " +
+            seconds + "s";
+
+    }, 1000);
+</script>
+{%endblock%}
