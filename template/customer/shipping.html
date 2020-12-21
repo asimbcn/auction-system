@@ -1,0 +1,44 @@
+{% extends  'customer/section/main.html'%}
+{% load static %}
+{% block title %}Edit | {{user.username}}{% endblock %}
+{%block css%}
+<link rel="stylesheet" href="{% static 'css/edit.css' %}">
+{%endblock%}
+{% block content %}
+<div class="editProfile">
+    <div class="heading">
+        <h1>Edit Shipping</h1>
+        <p>You May Only be able to edit this once!</p>
+        {%if messages%}
+        {%for message in messages%}
+        <p>{{message}}</p>
+        {%endfor%}
+        {%endif%}
+
+    </div>
+    <div class=" user-info">
+        <form action="{% url 'editShipping' user.customer.id %}" method="POST">
+            {%csrf_token%}
+            <div class="form">
+                <label for="address">Address</label>
+                <input type="text" name="address" id="address" {%if shipping.address%}placeholder="{{shipping.address}}"
+                    {%else%}placeholder="Current Address" {%endif%}>
+                <label for="city">City</label>
+                <input type="text" name="city" id="city" {%if shipping.city%}placeholder="{{shipping.city}}"
+                    {%else%}placeholder="Current City" {%endif%}>
+                <label for="state">State</label>
+                <input type="text" name="state" id="state" {%if shipping.state%}placeholder="{{shipping.state}}"
+                    {%else%}placeholder="Current State or Province" {%endif%}>
+                <label for="zipcode">Zipcode</label>
+                <input type="text" name="zipcode" id="zipcode" {%if shipping.zipcode%}placeholder="{{shipping.zipcode}}"
+                    {%else%}placeholder="Area Zipcode" {%endif%}>
+            </div>
+            <div class="btns">
+                <input type="submit" value="Submit">
+                <input type="reset" value="Reset">
+            </div>
+
+        </form>
+    </div>
+</div>
+{% endblock %}

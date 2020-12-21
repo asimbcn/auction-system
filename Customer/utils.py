@@ -1,6 +1,11 @@
 from .models import Customer, ShippingAddress
 from Administrator.models import Product, Coupon
-from datetime import datetime
+from django.contrib.auth.models import User
+from datetime import datetime, date
+from django.contrib import messages
+import re
+from django.contrib.auth.hashers import check_password
+from django.core.validators import validate_email
 
 
 def check_permission(request):
@@ -88,16 +93,88 @@ def getShipping(request):
         return ''
 
 
-# def prodUpdate():
-#     product = Product.objects.filter(status=True)
-#     for p in product:
-#         print(p)
-#         print(datetime.date())
-#         print(p.valid_time)
-#         # if datetime.now() > p.valid_time:
-#         #     print('change')
-#         #     p.status = False
-#         #     try:
-#         #         prod.save()
-#         #     except:
-#         #         continue
+def checkUserEdit(request, pk):
+
+    customer = Customer.objects.get(id=pk)
+    user = customer.user
+
+    if User.objects.filter(username=request.POST['username']).count() > 0:
+        messages.info(request, 'Username Already Exists')
+        return False
+
+    if User.objects.filter(email=request.POST['email']).count() > 0:
+        messages.info(request, 'Email Already Exists')
+        return False
+
+    if request.POST['email'] != '':
+        try:
+            validate_email(request.POST['email'])
+        except:
+            messages.info(request, 'Invalid Email')
+            return False
+
+    if check_password(request.POST['password'], user.password) == False:
+        messages.info(request, 'Password Does not Match')
+        return False
+
+    return True
+
+
+def checkProd():
+    product = Product.objects.all()
+    for p in product:
+        if date.today() > p.valid_time.date():
+            p.status = False
+            try:
+                p.save()
+            except:
+                pass
+
+    return True
+
+
+def saveInfo(request, pk):
+    customer = Customer.objects.get(id=pk)
+    user = customer.user
+    if request.POST['username'] != '':
+        user.username = request.POST['username']
+
+    if request.POST['name'] != '':
+        user.first_name = request.POST['name']
+        customer.name = request.POST['name']
+
+    if request.POST['email'] != '':
+        user.email = request.POST['email']
+        customer.email = request.POST['email']
+
+    try:
+        user.save()
+        customer.save()
+        return True
+    except:
+        messages.info(request, 'Something Went Wrong!')
+        return False
+
+
+def checkShipping(request, shipping):
+    if request.POST['address'] != '':
+        address = request.POST['address']
+    else:
+        address = shipping.address
+
+    if request.POST['city'] != '':
+        city = request.POST['city']
+    else:
+        city = shipping.city
+
+    if request.POST['state'] != '':
+        state = request.POST['state']
+    else:
+        state = shipping.state
+
+    if request.POST['zipcode'] != '':
+        zipcode = request.POST['zipcode']
+    else:
+        zipcode = shipping.zipcode
+
+    return address, city, state, zipcode

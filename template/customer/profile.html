@@ -20,7 +20,7 @@
             <div class="edit-info">
                 <a href="{% url 'editUser' customer.id %}" class="edit-profile">Edit Profile</a>
                 {%if shipping.edit == True%}
-                <a href="#" class="edit-profile">Edit Shipping Info</a>
+                <a href="{% url 'editShipping' customer.id %}" class="edit-profile">Edit Shipping Info</a>
                 {%endif%}
             </div>
         </div>

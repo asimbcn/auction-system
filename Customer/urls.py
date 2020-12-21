@@ -13,6 +13,7 @@ urlpatterns = [
     path('product/<slug:slug>', views.completeProduct, name="completeProduct"),
     path('edit/photo/<str:pk>', views.editPhoto, name="editPhoto"),
     path('edit/user/<str:pk>', views.editUser, name="editUser"),
+    path('edit/shipping/<str:pk>', views.editShipping, name="editShipping"),
     path('wishlist/', views.wishlist, name="wishlist"),
     path('profile/<str:user>/', views.Userprofile, name="profile"),
 ]

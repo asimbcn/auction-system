@@ -7,6 +7,11 @@
     gap: 10px;
 }
 
+.heading p {
+    color: red;
+    text-align: center;
+}
+
 h1 {
     font-size: 3em;
     font-weight: 500;

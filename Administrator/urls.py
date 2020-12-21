@@ -14,4 +14,5 @@ urlpatterns = [
     path('delete/user/<str:pk>', views.deleteUser, name="deleteUser"),
     path('delete/product/<str:pk>', views.deleteProd, name="deleteProd"),
     path('delete/coupon/<str:pk>', views.deleteCoup, name="deleteCoup"),
+    path('shipping/<str:pk>', views.shippingAccess, name="shippingAccess")
 ]

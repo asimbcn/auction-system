@@ -145,8 +145,9 @@ def adminUsers(request):
         return redirect('home')
 
     users = User.objects.all()
+    shipping = ShippingAddress.objects.all()
 
-    context = {'users': 'true', 'data': users}
+    context = {'users': 'true', 'data': users, 'shipping': shipping}
     return render(request, 'adminpanel/users.html', context)
 
 
@@ -157,6 +158,24 @@ def deleteUser(request, pk):
 
     user = User.objects.get(id=pk)
     user.delete()
+    return redirect('adminUsers')
+
+
+@login_required(login_url='login')
+def shippingAccess(request, pk):
+    if check_permission(request)['status'] == False:
+        return redirect('home')
+
+    customer = Customer.objects.get(id=pk)
+    shipping = ShippingAddress.objects.get(customer=customer)
+
+    if shipping.edit != True:
+        shipping.edit = True
+        try:
+            shipping.save()
+        except:
+            pass
+
     return redirect('adminUsers')
 
 

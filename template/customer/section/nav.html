@@ -7,7 +7,7 @@
         <div class="nav-link">
             <ul>
                 <li><a href="{% url 'home' %}" {% if  index %}class="active" {%endif%}>Home</a></li>
-                {% if user.is_authenticated%}
+                {% if request.user.is_authenticated%}
                 <li><a href="{% url 'wishlist' %}" {% if  wishlist %}class="active" {%endif%}>Wishlist</a></li>
                 <li><a href="{% url 'logout' %}">Logout</a></li>
                 <li><a href="{% url 'profile' request.user %}" {% if  profile %}class="active" {%endif%}>Profile</a>
