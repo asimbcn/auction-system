@@ -134,16 +134,24 @@ def editPhoto(request, pk):
 @login_required(login_url='login')
 def Userprofile(request, user):
     if str(request.user) != str(user):
-        return redirect(Userprofile, user=request.user)
+        customer = getProfile(request, user=user)
+        if customer == False:
+            return redirect(Userprofile, user=request.user)
 
-    customer = getProfile(request)
-    shipping = getShipping(request)
+        shipping = getShipping(request, user)
+        currentUser = False
+
+    else:
+        customer = getProfile(request)
+        shipping = getShipping(request)
+        currentUser = True
     # transaction_id = int(datetime.datetime.now().timestamp())
     context = {
         'profile': 'true',
         'customer': customer,
         'shipping': shipping,
-        'user': user
+        'user': user,
+        'currentUser': currentUser
     }
     return render(request, 'customer/profile.html', context)
 

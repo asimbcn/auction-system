@@ -65,10 +65,17 @@ def getCoupon(request):
     }
 
 
-def getProfile(request, pk='None'):
+def getProfile(request, pk='None', user='NoOne'):
     if pk != 'None':
         customer = Customer.objects.get(id=pk)
         return customer
+    elif user != 'NoOne':
+        try:
+            user = User.objects.get(username=user)
+            customer = Customer.objects.get(user=user)
+            return customer
+        except:
+            return False
     else:
         user = request.user
         if user is not None:
@@ -81,8 +88,12 @@ def getProfile(request, pk='None'):
             return ''
 
 
-def getShipping(request):
-    customer = getProfile(request)
+def getShipping(request, user='NoUser'):
+    if user != 'NoUser':
+        customer = getProfile(request, user=user)
+    else:
+        customer = getProfile(request)
+
     if customer != '':
         try:
             shipping = ShippingAddress.objects.get(customer=customer)

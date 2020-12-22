@@ -94,3 +94,17 @@ class ShippingAddress(models.Model):
 
     def __str__(self):
         return f"{self.customer}"
+
+
+class WishList(models.Model):
+    customer = models.ForeignKey(Customer,
+                                 on_delete=models.CASCADE,
+                                 blank=True,
+                                 null=True)
+    product = models.ForeignKey(Product,
+                                on_delete=models.CASCADE,
+                                blank=True,
+                                null=True)
+
+    def __str__(self):
+        return f"{self.customer}'s Wish"

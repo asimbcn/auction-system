@@ -8,19 +8,25 @@
 <div class="details">
     <div class="top-bar">
         <div class="profile-picture">
-            <form action="{%url 'editPhoto' customer.id %}" method="post" enctype="multipart/form-data">
+            <form {%if currentUser%} action="{%url 'editPhoto' customer.id %}" {%else%} action="#"
+                {%endif%}method="post" enctype="multipart/form-data">
                 {%csrf_token%}
                 <label for="profile-update"><img class="image" src="{{customer.imageURL}}"
                         alt="{{customer.user.username}}'s profile picture" srcset="{{customer.imageURL}}"></label>
+                {%if currentUser%}
                 <input type="file" id="profile-update" name="image" accept="image/*" onchange="form.submit()" hidden />
+                {%endif%}
             </form>
         </div>
+
         <div class="top-info">
             <h2>{{customer.name}}</h2>
             <div class="edit-info">
+                {%if currentUser%}
                 <a href="{% url 'editUser' customer.id %}" class="edit-profile">Edit Profile</a>
                 {%if shipping.edit == True%}
                 <a href="{% url 'editShipping' customer.id %}" class="edit-profile">Edit Shipping Info</a>
+                {%endif%}
                 {%endif%}
             </div>
         </div>
