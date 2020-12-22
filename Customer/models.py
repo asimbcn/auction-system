@@ -1,6 +1,9 @@
 from django.db import models
 from django.contrib.auth.models import User
 from Administrator.models import Product, Coupon
+from datetime import datetime
+
+CURRENT_DATE = datetime.now()
 
 
 # Create your models here.
@@ -108,3 +111,20 @@ class WishList(models.Model):
 
     def __str__(self):
         return f"{self.customer}'s Wish"
+
+
+class Bid(models.Model):
+    customer = models.ForeignKey(Customer,
+                                 on_delete=models.CASCADE,
+                                 blank=True,
+                                 null=True)
+    product = models.ForeignKey(Product,
+                                on_delete=models.CASCADE,
+                                blank=True,
+                                null=True)
+    bid_amount = models.IntegerField(default=0, null=True, blank=True)
+    highest = models.BooleanField(default=False)
+    date_created = models.DateTimeField(default=CURRENT_DATE, null=True)
+
+    def __str__(self):
+        return f"{self.customer}'s Bid for {self.product}"

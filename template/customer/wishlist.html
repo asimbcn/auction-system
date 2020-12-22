@@ -2,7 +2,14 @@
 {% load static %}
 {% block title %}Wishlist{% endblock %}
 {% block content %}
-<div>
+<div class="wishlist">
     <h1>Wishlist</h1>
+    <div class="items">
+        {% if data%}
+        {%for wish in data%}
+        <a href="{% url 'view' wish.product.slug %}" class="wishlist-item">{{wish.product}}</a><br>
+        {%endfor%}
+        {%endif%}
+    </div>
 </div>
 {% endblock %}

@@ -98,9 +98,14 @@ def cart(request):
 
 def viewProduct(request, slug):
     product = Product.objects.get(slug=slug)
+    if checkWishlist(request, slug) == True:
+        wishlist = True
+    else:
+        wishlist = False
+
     if product.status == False:
         return redirect('home')
-    context = {'product': product}
+    context = {'product': product, 'data': wishlist}
     return render(request, 'customer/view.html', context)
 
 
@@ -114,8 +119,36 @@ def completeProduct(request, slug):
 
 @login_required(login_url='login')
 def wishlist(request):
-    context = {'wishlist': 'true'}
+
+    wishlist = WishList.objects.filter(customer=request.user.customer)
+    context = {'wishlist': 'true', 'data': wishlist}
     return render(request, 'customer/wishlist.html', context)
+
+
+@login_required(login_url='login')
+def addWishlist(request, slug):
+    if checkWishlist(request, slug) == True:
+        try:
+            product = Product.objects.get(slug=slug)
+            customer = Customer.objects.get(user=request.user)
+            WishList.objects.create(customer=customer, product=product)
+        except:
+            pass
+
+    return redirect(viewProduct, slug=slug)
+
+
+@login_required(login_url='login')
+def removeWishlist(request, slug):
+    if checkWishlist(request, slug) == False:
+        try:
+            product = Product.objects.get(slug=slug)
+            wishlist = WishList.objects.get(product=product)
+            wishlist.delete()
+        except:
+            pass
+
+    return redirect(viewProduct, slug=slug)
 
 
 @login_required(login_url='login')
@@ -183,3 +216,12 @@ def editShipping(request, pk):
 def user_logout(request):
     logout(request)
     return redirect('home')
+
+
+@login_required(login_url='login')
+def bidderInfo(request, slug):
+    product = Product.objects.get(slug=slug)
+    bider = Bid.objects.filter(product=product)
+    bidders = sorted(bider, key=lambda bid: bid.date_created, reverse=True)
+    context = {'bidders': bidders, 'product': product}
+    return render(request, 'customer/bid.html', context)

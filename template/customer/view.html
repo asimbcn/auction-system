@@ -41,13 +41,17 @@
                 <a href="{% url 'completeProduct' product.slug%}">Product Detail</a>
             </div>
         </div>
-
-
+        <div class="other-info">
+            <a href="{% url 'bidderInfo' product.slug%}" class="current-btn">Current Bids</a>
+            {% if data == True%}
+            <a href="{% url 'addWishlist' product.slug %}" class="wishlist-btn-add">Add to Wishlist</a>
+            {%else%}
+            <a href="{% url 'removeWishlist' product.slug %}" class="wishlist-btn-remove">Remove from Wishlist</a>
+            {%endif%}
+        </div>
     </div>
-
 </div>
 {% endblock %}
-
 
 {% block script %}
 <script>

@@ -1,0 +1,96 @@
+{% extends  'customer/section/main.html'%}
+{% load static %}
+{% block title %}Bid Information{% endblock %}
+{%block css%}
+<style>
+    .bidder {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        padding: 50px;
+        gap: 70px;
+        width: 100%;
+    }
+
+    .highest {
+        color: green;
+    }
+
+    cite {
+        text-decoration: underline;
+    }
+
+    a {
+        text-decoration: none;
+        color: black;
+        transition: 0.2s ease-in-out;
+    }
+
+    a:hover {
+        color: blue;
+    }
+
+    table {
+        width: 70%;
+        font-size: 1.4em;
+    }
+
+    th {
+        border-bottom: 1px solid black;
+    }
+
+
+    td,
+    th {
+        text-align: center;
+        padding: 10px;
+
+    }
+
+    td {
+        border-bottom: 1px solid grey;
+        font-weight: 500;
+    }
+
+    tr:last-child td {
+        border: none;
+    }
+
+    th:first-child,
+    td:first-child {
+        text-align: left;
+    }
+
+    th:last-child,
+    td:last-child {
+        text-align: right;
+    }
+</style>
+{%endblock%}
+{% block content %}
+<div class="bidder">
+    <h1>Bid for <i>"</i><a href="{% url 'view' product.slug %}"><cite>{{product.title}}</cite></a><i>"</i>
+    </h1>
+    <table>
+        <thead>
+            <th>Name</th>
+            <th>Amount</th>
+            <th>Status</th>
+        </thead>
+        <tbody>
+            {%if bidders %}
+            {%for bidder in bidders%}
+            <tr>
+                <td><a href="{% url 'profile' bidder.customer.user %}">{{bidder.customer.name}}</a></td>
+                <td>{{bidder.bid_amount}}</td>
+                {%if bidder.highest == True %}<td class="highest">Current Highest</td>{%else%}<td>
+                    Bidder</td>{%endif%}
+            </tr>
+            {%endfor%}
+            {%endif%}
+        </tbody>
+    </table>
+
+</div>
+{% endblock %}

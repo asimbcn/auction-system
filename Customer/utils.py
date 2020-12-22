@@ -1,5 +1,5 @@
-from .models import Customer, ShippingAddress
-from Administrator.models import Product, Coupon
+from .models import *
+from Administrator.models import *
 from django.contrib.auth.models import User
 from datetime import datetime, date
 from django.contrib import messages
@@ -189,3 +189,23 @@ def checkShipping(request, shipping):
         zipcode = shipping.zipcode
 
     return address, city, state, zipcode
+
+
+def checkWishlist(request, slug):
+    product = Product.objects.get(slug=slug)
+    customer = Customer.objects.get(user=request.user)
+
+    wishlist = WishList.objects.filter(customer=customer,
+                                       product=product).count()
+    if wishlist > 0:
+        return False
+
+    return True
+
+
+def HighestBidder(prod):
+    try:
+        highest = Bid.objects.get(product=prod, highest=True)
+        return highest
+    except:
+        return False
