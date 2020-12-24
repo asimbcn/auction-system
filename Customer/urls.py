@@ -20,5 +20,6 @@ urlpatterns = [
          views.removeWishlist,
          name="removeWishlist"),
     path('profile/<str:user>/', views.Userprofile, name="profile"),
-    path('bidders/<slug:slug>/', views.bidderInfo, name="bidderInfo")
+    path('bidders/<slug:slug>/', views.bidderInfo, name="bidderInfo"),
+    path('bid/<slug:slug>/', views.placeBid, name="placeBid"),
 ]

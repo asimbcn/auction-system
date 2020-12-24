@@ -12,7 +12,6 @@ class Product(models.Model):
     title = models.CharField(max_length=200, null=True)
     slug = AutoSlugField(populate_from='title', unique=True)
     start_bid = models.IntegerField(null=True)
-    max_bid = models.IntegerField(null=True, blank=True)
     digital = models.BooleanField(default=False, null=True, blank=False)
     image = models.ImageField(upload_to="products/", null=True)
     status = models.BooleanField(default=True, null=True, blank=False)

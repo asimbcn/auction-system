@@ -119,7 +119,6 @@ def completeProduct(request, slug):
 
 @login_required(login_url='login')
 def wishlist(request):
-
     wishlist = WishList.objects.filter(customer=request.user.customer)
     context = {'wishlist': 'true', 'data': wishlist}
     return render(request, 'customer/wishlist.html', context)
@@ -225,3 +224,16 @@ def bidderInfo(request, slug):
     bidders = sorted(bider, key=lambda bid: bid.date_created, reverse=True)
     context = {'bidders': bidders, 'product': product}
     return render(request, 'customer/bid.html', context)
+
+
+@login_required(login_url='login')
+def placeBid(request, slug):
+    product = Product.objects.get(slug=slug)
+    if request.method == 'POST':
+        user_amount = request.POST['bidamount']
+        if validBid(product, user_amount):
+            print('Set Highest')
+            setHighestBidder(product, user_amount, request.user.customer)
+        else:
+            print('Not Valid Bid')
+        return redirect(viewProduct, slug=slug)

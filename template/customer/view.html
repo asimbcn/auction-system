@@ -32,9 +32,9 @@
             <div class="bid-price">
                 <span>Start Price : Rs. {{product.start_bid}}</span>
             </div>
-            <form action="#" method="post" class="bidding-form">
+            <form action="{% url 'placeBid' product.slug %}" method="post" class="bidding-form">
                 {%csrf_token%}
-                <input type="number" class="bidding-input" required />
+                <input type="number" name="bidamount" class="bidding-input" required />
                 <button type="submit" value="submit" class="bidding-button">Bid</button>
             </form>
             <div class="all-info">

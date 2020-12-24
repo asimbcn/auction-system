@@ -209,3 +209,40 @@ def HighestBidder(prod):
         return highest
     except:
         return False
+
+
+def setHighestBidder(prod, usr_amount, customer):
+    if highestValueCheck(prod, usr_amount):
+        bidder = HighestBidder(prod)
+        # check if existing higest bidder exist -> if yes work accordingly
+        # else set highest bidder
+    else:
+        return False
+
+
+def validBid(prod, usr_amount):
+    if highestValueCheck(prod, usr_amount) and bidValueCheck(prod, usr_amount):
+        return True
+    else:
+        return False
+
+
+def highestValueCheck(prod, usr_amount):
+    current = HighestBidder(prod)
+    try:
+        current_amt = current.bid_amount
+    except:
+        current_amt = prod.start_bid
+
+    if int(usr_amount) > int(current_amt):
+        return True
+    else:
+        return False
+
+
+def bidValueCheck(prod, usr_amount):
+    prod_value = prod.start_bid
+    if int(usr_amount) > int(prod_value):
+        return True
+    else:
+        return False

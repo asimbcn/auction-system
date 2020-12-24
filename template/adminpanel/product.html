@@ -124,7 +124,7 @@
         {% for prod in allProd %}
         <tr>
             <td><a href="{% url 'editProduct' prod.id %}" class='prod-title'>{{prod.title}}</a></td>
-            <td>{{prod.start_bid}} <br>Max:{{prod.max_bid}}
+            <td>Rs. {{prod.start_bid}}
             </td>
             {% if prod.image or prod.image == '' %}
             <td>True</td>
