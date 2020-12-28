@@ -34,13 +34,21 @@
             </div>
             <form action="{% url 'placeBid' product.slug %}" method="post" class="bidding-form">
                 {%csrf_token%}
-                <input type="number" name="bidamount" class="bidding-input" required />
-                <button type="submit" value="submit" class="bidding-button">Bid</button>
+                <div class="bid-info-class">
+                    <input type="number" name="bidamount" class="bidding-input" required />
+                    <button type="submit" value="submit" class="bidding-button">Bid</button>
+                </div>
+                {%if messages%}
+                {%for message in messages%}
+                <small>{{message}}</small>
+                {%endfor%}
+                {%endif%}
             </form>
             <div class="all-info">
                 <a href="{% url 'completeProduct' product.slug%}">Product Detail</a>
             </div>
         </div>
+        {% if request.user.is_authenticated%}
         <div class="other-info">
             <a href="{% url 'bidderInfo' product.slug%}" class="current-btn">Current Bids</a>
             {% if data == True%}
@@ -49,6 +57,7 @@
             <a href="{% url 'removeWishlist' product.slug %}" class="wishlist-btn-remove">Remove from Wishlist</a>
             {%endif%}
         </div>
+        {%endif%}
     </div>
 </div>
 {% endblock %}

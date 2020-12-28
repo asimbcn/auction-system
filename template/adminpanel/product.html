@@ -98,6 +98,11 @@
     .prod-title:hover {
         color: rgb(17, 17, 14);
     }
+
+    a {
+        text-decoration: none;
+        color: black;
+    }
 </style>
 {% endblock%}
 {% block title %}Products | Admin{% endblock %}
@@ -132,9 +137,11 @@
             <td>False</td>
             {%endif%}
             {% if prod.status == True %}
-            <td style="color:darkgreen; font-weight: 700;">{{prod.status}}</td>
+            <td><a href="{% url 'activateProd' prod.slug %}" style="color:darkgreen; font-weight: 700;">
+                    {{prod.status}}</a></td>
             {%else%}
-            <td style="color:red;font-weight: 700;">{{prod.status}}</td>
+            <td><a href="{% url 'activateProd' prod.slug %}" style="color:red;font-weight: 700;"> {{prod.status}}</a>
+            </td>
             {%endif%}
 
             <td>{{prod.date_created | timesince }}</td>

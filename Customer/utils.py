@@ -193,7 +193,10 @@ def checkShipping(request, shipping):
 
 def checkWishlist(request, slug):
     product = Product.objects.get(slug=slug)
-    customer = Customer.objects.get(user=request.user)
+    try:
+        customer = Customer.objects.get(user=request.user)
+    except:
+        return False
 
     wishlist = WishList.objects.filter(customer=customer,
                                        product=product).count()
@@ -214,10 +217,17 @@ def HighestBidder(prod):
 def setHighestBidder(prod, usr_amount, customer):
     if highestValueCheck(prod, usr_amount):
         bidder = HighestBidder(prod)
-        # check if existing higest bidder exist -> if yes work accordingly
-        # else set highest bidder
-    else:
-        return False
+        if bidder != False:
+            bidder.highest = False
+            try:
+                bidder.save()
+            except:
+                pass
+
+        Bid.objects.create(customer=customer,
+                           product=prod,
+                           bid_amount=usr_amount,
+                           highest=True)
 
 
 def validBid(prod, usr_amount):
@@ -246,3 +256,30 @@ def bidValueCheck(prod, usr_amount):
         return True
     else:
         return False
+
+
+def biddingUser(customer, prod):
+    highest = HighestBidder(prod)
+    if highest == False:
+        return True
+
+    if str(highest.customer) != str(customer):
+        return True
+    else:
+        return False
+
+
+def bidAmountCheck(usr_amount, prod):
+    highest = HighestBidder(prod)
+    if highest:
+        if int(usr_amount) <= (highest.bid_amount * 2) and int(usr_amount) >= (
+                highest.bid_amount + 50):
+            return True
+        else:
+            return False
+    else:
+        if int(usr_amount) <= (prod.start_bid *
+                               2) and int(usr_amount) >= (prod.start_bid + 50):
+            return True
+        else:
+            return False

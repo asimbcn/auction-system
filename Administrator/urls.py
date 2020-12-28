@@ -12,7 +12,14 @@ urlpatterns = [
     path('coupon/edit/<str:pk>', views.editCoupon, name="editCoupon"),
     path('users/', views.adminUsers, name="adminUsers"),
     path('delete/user/<str:pk>', views.deleteUser, name="deleteUser"),
+    path('delete/user/step/<str:pk>',
+         views.deleteUserNext,
+         name="deleteUserNext"),
+    path('bid/change/<slug:slug>/<str:pk>',
+         views.changeBidder,
+         name="changeBidder"),
     path('delete/product/<str:pk>', views.deleteProd, name="deleteProd"),
     path('delete/coupon/<str:pk>', views.deleteCoup, name="deleteCoup"),
-    path('shipping/<str:pk>', views.shippingAccess, name="shippingAccess")
+    path('shipping/<str:pk>', views.shippingAccess, name="shippingAccess"),
+    path('prod/activate/<slug:slug>', views.activateProd, name="activateProd"),
 ]

@@ -232,8 +232,16 @@ def placeBid(request, slug):
     if request.method == 'POST':
         user_amount = request.POST['bidamount']
         if validBid(product, user_amount):
-            print('Set Highest')
-            setHighestBidder(product, user_amount, request.user.customer)
+            if bidAmountCheck(user_amount, product):
+                if biddingUser(request.user.customer, product):
+                    setHighestBidder(product, user_amount,
+                                     request.user.customer)
+                else:
+                    messages.info(request,
+                                  'You are already the highest bidder')
+            else:
+                messages.info(request, 'Bid Amount is not Valid')
         else:
-            print('Not Valid Bid')
+            messages.info(request, 'Not a Valid Bid')
+
         return redirect(viewProduct, slug=slug)

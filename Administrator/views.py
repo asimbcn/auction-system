@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from Customer.utils import check_permission, getProduct, getCoupon
 from .forms import CreateProduct, CreateCoupon
 from django.http import JsonResponse
+from datetime import datetime, timedelta
 import json
 
 
@@ -70,6 +71,26 @@ def editProduct(request, pk):
     context = {'products': 'true', 'form': form, 'error': error}
 
     return render(request, 'adminpanel/update_product.html', context)
+
+
+@login_required(login_url='login')
+def activateProd(request, slug):
+    if check_permission(request)['status'] == False:
+        return redirect('home')
+
+    product = Product.objects.get(slug=slug)
+
+    if product.status:
+        product.status = False
+    else:
+        product.valid_time = datetime.now() + timedelta(days=7)
+        product.status = True
+
+    try:
+        product.save()
+        return redirect('adminProducts')
+    except:
+        pass
 
 
 def closeBid(request):
@@ -157,7 +178,38 @@ def deleteUser(request, pk):
         return redirect('home')
 
     user = User.objects.get(id=pk)
-    user.delete()
+    highest = Bid.objects.filter(customer=user.customer, highest=True).count()
+
+    if highest > 0:
+        return redirect(deleteUserNext, pk=pk)
+    # user.delete()
+    return redirect('adminUsers')
+
+
+@login_required(login_url='login')
+def deleteUserNext(request, pk):
+    if check_permission(request)['status'] == False:
+        return redirect('home')
+
+    user = User.objects.get(id=pk)
+    highest = Bid.objects.filter(customer=user.customer, highest=True)
+    context = {'users': 'true', 'data': highest, 'user': user}
+    return render(request, 'adminpanel/specificUser.html', context)
+
+
+@login_required(login_url='login')
+def changeBidder(request, slug, pk):
+    if check_permission(request)['status'] == False:
+        return redirect('home')
+
+    user = User.objects.get(id=pk)
+    product = Product.objects.get(slug=slug)
+    current = Bid.objects.get(customer=user.customer,
+                              product=product,
+                              highest=True)
+    if current:
+        pass
+
     return redirect('adminUsers')
 
 

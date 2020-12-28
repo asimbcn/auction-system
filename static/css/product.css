@@ -80,9 +80,21 @@
     padding-bottom: 20px;
 }
 
+.bid-info-class {
+    display: flex;
+}
+
 .bidding-form {
     display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     /* float: left; */
+}
+
+small {
+    color: red;
+    font-weight: 700;
 }
 
 .bidding-section {
