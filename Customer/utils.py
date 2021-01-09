@@ -131,17 +131,69 @@ def checkUserEdit(request, pk):
     return True
 
 
-def checkProd():
+def checkProd(request):
     product = Product.objects.all()
     for p in product:
         if date.today() > p.valid_time.date():
             p.status = False
+            if HighestBidder(p) != False:
+                cartCheck(request, p.slug)
             try:
                 p.save()
             except:
                 pass
 
     return True
+
+
+def cartCheck(request, slug):
+    product = Product.objects.get(slug=slug)
+    orderItems = OrderItem.objects.filter(product=product).count()
+    if orderItems == 0:
+        addtoCart(request, slug)
+    else:
+        return False
+
+
+def deleteCart(request, slug):
+    product = Product.objects.get(slug=slug)
+    try:
+        orderItems = OrderItem.objects.get(product=product)
+        order = orderItems.order
+        order.delete()
+        orderItems.delete()
+        return True
+    except:
+        return False
+
+
+def addtoCart(request, slug):
+    product = Product.objects.get(slug=slug)
+    highest = HighestBidder(product)
+    if highest == False:
+        return False
+    else:
+        customer = highest.customer
+
+    order, created = Order.objects.get_or_create(
+        customer=customer, transaction_id=datetime.now().timestamp())
+    orderItem, created = OrderItem.objects.get_or_create(
+        order=order, product=product, quantity=product.quantity)
+    return True
+
+
+def cartData(request):
+    try:
+        customer = request.user.customer
+        order = Order.objects.get(customer=customer)
+        items = order.orderitem_set.all()
+        cartItems = order.get_cart_items
+    except:
+        order = 0
+        items = 0
+        cartItems = 0
+
+    return {'cartItems': cartItems, 'order': order, 'items': items}
 
 
 def saveInfo(request, pk):

@@ -12,9 +12,15 @@ import datetime
 
 # Create your views here.
 def index(request):
-    if checkProd():
+    if checkProd(request):
+        data = cartData(request)
+        cartItems = data['cartItems']
         products = Product.objects.all()
-        context = {'index': 'true', 'products': products}
+        context = {
+            'index': 'true',
+            'products': products,
+            'cartItems': cartItems,
+        }
         return render(request, 'customer/index.html', context)
 
 
@@ -38,7 +44,12 @@ def user_login(request):
         else:
             messages.info(request, 'Username or Password Incorrect')
 
-    context = {'login': 'true'}
+    data = cartData(request)
+    cartItems = data['cartItems']
+    context = {
+        'login': 'true',
+        'cartItems': cartItems,
+    }
     return render(request, 'login.html', context)
 
 
@@ -56,7 +67,13 @@ def register(request):
         else:
             messages.info(request, 'Registration Error, Try Again')
 
-    context = {'login': 'true', 'form': form}
+    data = cartData(request)
+    cartItems = data['cartItems']
+    context = {
+        'login': 'true',
+        'form': form,
+        'cartItems': cartItems,
+    }
     return render(request, 'register.html', context)
 
 
@@ -73,7 +90,12 @@ def adminSelect(request):
         else:
             return redirect('logout')
 
-    context = {'route': 'true'}
+    data = cartData(request)
+    cartItems = data['cartItems']
+    context = {
+        'route': 'true',
+        'cartItems': cartItems,
+    }
     return render(request, 'redirect.html', context)
 
 
@@ -87,12 +109,26 @@ def editUser(request, pk):
             if saveInfo(request, pk):
                 return redirect(Userprofile, user=user)
 
-    context = {'profile': 'true', 'user': user}
+    data = cartData(request)
+    cartItems = data['cartItems']
+    context = {
+        'profile': 'true',
+        'user': user,
+        'cartItems': cartItems,
+    }
     return render(request, 'customer/editUser.html', context)
 
 
 def cart(request):
-    context = {}
+    data = cartData(request)
+    cartItems = data['cartItems']
+    order = data['order']
+    items = data['items']
+    context = {
+        'items': items,
+        'order': order,
+        'cartItems': cartItems,
+    }
     return render(request, 'customer/cart.html', context)
 
 
@@ -105,7 +141,13 @@ def viewProduct(request, slug):
 
     if product.status == False:
         return redirect('home')
-    context = {'product': product, 'data': wishlist}
+    data = cartData(request)
+    cartItems = data['cartItems']
+    context = {
+        'product': product,
+        'data': wishlist,
+        'cartItems': cartItems,
+    }
     return render(request, 'customer/view.html', context)
 
 
@@ -113,14 +155,25 @@ def completeProduct(request, slug):
     product = Product.objects.get(slug=slug)
     if product.status == False:
         return redirect('home')
-    context = {'product': product}
+    data = cartData(request)
+    cartItems = data['cartItems']
+    context = {
+        'product': product,
+        'cartItems': cartItems,
+    }
     return render(request, 'customer/all.html', context)
 
 
 @login_required(login_url='login')
 def wishlist(request):
     wishlist = WishList.objects.filter(customer=request.user.customer)
-    context = {'wishlist': 'true', 'data': wishlist}
+    data = cartData(request)
+    cartItems = data['cartItems']
+    context = {
+        'wishlist': 'true',
+        'data': wishlist,
+        'cartItems': cartItems,
+    }
     return render(request, 'customer/wishlist.html', context)
 
 
@@ -177,13 +230,16 @@ def Userprofile(request, user):
         customer = getProfile(request)
         shipping = getShipping(request)
         currentUser = True
-    # transaction_id = int(datetime.datetime.now().timestamp())
+
+    data = cartData(request)
+    cartItems = data['cartItems']
     context = {
         'profile': 'true',
         'customer': customer,
         'shipping': shipping,
         'user': user,
-        'currentUser': currentUser
+        'currentUser': currentUser,
+        'cartItems': cartItems,
     }
     return render(request, 'customer/profile.html', context)
 
@@ -207,7 +263,13 @@ def editShipping(request, pk):
         except:
             messages.info(request, 'Something Went Wrong!')
 
-    context = {'profile': 'true', 'shipping': shipping}
+    data = cartData(request)
+    cartItems = data['cartItems']
+    context = {
+        'profile': 'true',
+        'shipping': shipping,
+        'cartItems': cartItems,
+    }
     return render(request, 'customer/shipping.html', context)
 
 
@@ -222,7 +284,14 @@ def bidderInfo(request, slug):
     product = Product.objects.get(slug=slug)
     bider = Bid.objects.filter(product=product)
     bidders = sorted(bider, key=lambda bid: bid.date_created, reverse=True)
-    context = {'bidders': bidders, 'product': product}
+
+    data = cartData(request)
+    cartItems = data['cartItems']
+    context = {
+        'bidders': bidders,
+        'product': product,
+        'cartItems': cartItems,
+    }
     return render(request, 'customer/bid.html', context)
 
 

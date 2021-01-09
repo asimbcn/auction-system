@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from .models import *
 from Customer.models import *
 from django.contrib.auth.decorators import login_required
-from Customer.utils import check_permission, getProduct, getCoupon
+from Customer.utils import *
 from .forms import CreateProduct, CreateCoupon
 from django.http import JsonResponse
 from datetime import datetime, timedelta
@@ -86,6 +86,7 @@ def activateProd(request, slug):
         product.valid_time = datetime.now() + timedelta(days=7)
         product.status = True
 
+    deleteCart(request, slug)
     try:
         product.save()
         return redirect('adminProducts')
@@ -99,6 +100,7 @@ def closeBid(request):
         slugData = data['slug']
         product = Product.objects.get(slug=slugData)
         product.status = False
+        cartCheck(request, product.slug)
         try:
             product.save()
             return JsonResponse('Product Expired', safe=False)
@@ -182,7 +184,6 @@ def deleteUser(request, pk):
 
     if highest > 0:
         return redirect(deleteUserNext, pk=pk)
-    # user.delete()
     return redirect('adminUsers')
 
 
@@ -207,7 +208,14 @@ def changeBidder(request, slug, pk):
     current = Bid.objects.get(customer=user.customer,
                               product=product,
                               highest=True)
+    new = Bid.objects.filter(product=product, highest=False).last()
     if current:
+        user.delete()
+
+    new.highest = True
+    try:
+        new.save()
+    except:
         pass
 
     return redirect('adminUsers')

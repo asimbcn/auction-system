@@ -1,8 +1,43 @@
 {% extends  'customer/section/main.html'%}
 {% load static %}
 {% block title %}Cart{% endblock %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/cart.css' %}">
+{% endblock %}
 {% block content %}
-<div>
-    <h1>Cart</h1>
+<div class="cart-title">
+    <div class="cart-header">
+        <h3>Cart</h3>
+        <div class="cart-data">
+            <span class="total-items">Items :
+                {%if order.get_cart_items%}{{order.get_cart_items}}{%else%}0{%endif%}</span>
+            <span class="total-amount">Total : Rs.
+                {%if order.get_cart_total%}{{order.get_cart_total}}{%else%}0{%endif%}</span>
+        </div>
+    </div>
+    <div class="cart-items">
+        <table align="center">
+            <thead>
+                <th></th>
+                <th>Item</th>
+                <th>Quantity</th>
+                <th>Total</th>
+            </thead>
+            <tbody>
+                {%if items%}
+                {% for item in items %}
+                <tr>
+                    <td class="prod-photo"><a href="{{item.product.image.url}}" target="blank"><img
+                                src="{{item.product.image.url}}" alt="{{item.product.title}}"></a></td>
+                    </td>
+                    <td><a href="{% url 'view' item.product.slug %}">{{item.product.title}}</a></td>
+                    <td>{{item.product.quantity}}</td>
+                    <td>Rs.{{item.product.start_bid}}</td>
+                </tr>
+                {% endfor%}
+                {%endif%}
+            </tbody>
+        </table>
+    </div>
 </div>
 {% endblock %}

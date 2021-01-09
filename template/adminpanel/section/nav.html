@@ -6,6 +6,7 @@
     <div class="nav-link">
         <ul>
             <li><a href="{% url 'adminIndex' %}" {% if  index %}class="active" {%endif%}>Home</a></li>
+            <li><a href="{% url 'home' %}">Homepage</a></li>
             <li><a href="{% url 'adminProducts' %}" {% if  products %}class="active" {%endif%}>Products</a></li>
             <li><a href="{% url 'adminCoupons' %}" {% if  coupons %}class="active" {%endif%}>Coupons</a></li>
             <li><a href="{% url 'adminUsers' %}" {% if  users %}class="active" {%endif%}>Users</a></li>

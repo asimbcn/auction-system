@@ -33,7 +33,7 @@ class Customer(models.Model):
 
 class Order(models.Model):
     customer = models.ForeignKey(Customer,
-                                 on_delete=models.SET_NULL,
+                                 on_delete=models.CASCADE,
                                  blank=True,
                                  null=True)
     date_ordered = models.DateTimeField(auto_now_add=True)
@@ -41,16 +41,7 @@ class Order(models.Model):
     transaction_id = models.CharField(max_length=200, null=True)
 
     def __str__(self):
-        return str(self.id)
-
-    @property
-    def shipping(self):
-        shipping = False
-        orderitems = self.orderitem_set.all()
-        for i in orderitems:
-            if i.product.digital == False:
-                shipping = True
-        return shipping
+        return f"{self.customer}'s Order"
 
     @property
     def get_cart_total(self):
@@ -71,15 +62,18 @@ class OrderItem(models.Model):
                                 blank=True,
                                 null=True)
     order = models.ForeignKey(Order,
-                              on_delete=models.SET_NULL,
+                              on_delete=models.CASCADE,
                               blank=True,
                               null=True)
     quantity = models.IntegerField(default=0, null=True, blank=True)
     date_added = models.DateTimeField(auto_now_add=True)
 
+    def __str__(self):
+        return f"Order for {self.product}"
+
     @property
     def get_total(self):
-        total = self.product.price * self.quantity
+        total = self.product.start_bid * self.quantity
         return total
 
 
