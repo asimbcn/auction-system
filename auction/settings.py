@@ -23,9 +23,9 @@ BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 SECRET_KEY = 'p@vvgh@30#c0rf3ez8b=&z4@v7*8*e9z4#ao12n)*sn$g58kpo'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-# ALLOWED_HOSTS = ["asimbcn-auction.herokuapp.com", "127.0.0.1"]
+ALLOWED_HOSTS = ["asimbcn-auction.herokuapp.com", "127.0.0.1"]
 
 # Application definition
 
@@ -122,7 +122,7 @@ USE_TZ = True
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
-# STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
