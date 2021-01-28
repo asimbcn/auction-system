@@ -28,7 +28,7 @@
                 {% for item in items %}
                 <tr>
                     <td class="prod-photo"><a href="{{item.product.image.url}}" target="blank"><img
-                                src="{{item.product.image.url}}" alt="{{item.product.title}}"></a></td>
+                                src="https://asimbcn-auction.herokuapp.com/static{{item.product.image.url}}" alt="{{item.product.title}}"></a></td>
                     </td>
                     <td><a href="{% url 'view' item.product.slug %}">{{item.product.title}}</a></td>
                     <td>{{item.product.quantity}}</td>
