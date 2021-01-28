@@ -11,8 +11,8 @@
             <form {%if currentUser%} action="{%url 'editPhoto' customer.id %}" {%else%} action="#"
                 {%endif%}method="post" enctype="multipart/form-data">
                 {%csrf_token%}
-                <label for="profile-update"><img class="image" src="{{customer.imageURL}}"
-                        alt="{{customer.user.username}}'s profile picture" srcset="{{customer.imageURL}}"></label>
+                <label for="profile-update"><img class="image" src="https://asimbcn-auction.herokuapp.com/static{{customer.imageURL}}"
+                        alt="{{customer.user.username}}'s profile picture" srcset="https://asimbcn-auction.herokuapp.com/static{{customer.imageURL}}"></label>
                 {%if currentUser%}
                 <input type="file" id="profile-update" name="image" accept="image/*" onchange="form.submit()" hidden />
                 {%endif%}
